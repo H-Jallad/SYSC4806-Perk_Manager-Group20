@@ -71,5 +71,20 @@ public class User {
         return null;
     }
 
+    public String toString() {
+        String temp = String.format(
+                "User[id=%d]",
+                id);
+        for (Membership membership: membershipList) {
+            temp += "\n";
+            temp += membership.toString();
+        }
+
+        for (Perk perk: availablePerks) {
+            temp += "\n";
+            temp += perk.toString();
+        }
+        return temp;
+    }
 
 }
