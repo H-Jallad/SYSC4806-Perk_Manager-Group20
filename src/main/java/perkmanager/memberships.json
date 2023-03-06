@@ -1,0 +1,30 @@
+{
+    "membership": [
+        {
+            "name": "CAA",
+            "perks": [
+                {
+                    "name": "Insurance Discount",
+                    "description": "Receive 10% your car insurance if you go through the CAA web portal."
+                },
+                {
+                    "name": "Insurance Discount",
+                    "description": "Receive 10% your car insurance if you go through the CAA web portal."
+                }
+            ]
+        },
+        {
+            "name": "AMEX Platinum",
+            "perks": [
+                {
+                    "name": "$10 Esso Gift Card",
+                    "description": "Get a $10 Esso gift card when spending $70 or more on gas by March 31st!"
+                },
+                {
+                    "name": "5x AMEX Points",
+                    "description": "Receive 5x AMEX points when shopping at Amazon from March 15th to April 1st"
+                }
+            ]
+        }
+    ]
+}
