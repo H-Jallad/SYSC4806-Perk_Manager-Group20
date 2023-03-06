@@ -3,23 +3,43 @@ package perkmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Perk {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String description; 
+    private String name;
 
     public Perk() {
 
     }
 
-    /**
-     * Function used to retrieve all the available perks from a specific list of memberships.
-     *
-     * @param memberships The list of memberships
-     * @return The list of available perks
-     */
-    public List<Perk> retrieveAvailablePerks(List<Membership> memberships) {
-        ArrayList<Perk> allPerks = new ArrayList<>();
+    public void setDescriptions(String description){
+        this.description = description;
+    }
 
-        //Update function
+    public String getDescription(){
+        return description;
+    }
 
-        return allPerks;
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(name).append('\n');
+        sb.append(description);
+        return sb.toString();
     }
 }

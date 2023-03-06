@@ -1,17 +1,39 @@
 package perkmanager;
 
-public enum Membership {
-    CAA("CAA"),
-    CREDITCARD("credit card"),
-    AIRMILE("air mile");
+import java.util.ArrayList;
+import java.util.List;
 
-    private String membershipName;
+import jakarta.persistence.*;
 
-    Membership(String membershipName) {
-        this.membershipName = membershipName;
+@Entity
+public class Membership {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Perk> perkList;
+
+    private String name;
+
+    public Membership(){
+        perkList = new ArrayList<>();
     }
 
-    public String getMembershipName() {
-        return membershipName;
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void addPerk(Perk perk) {
+        this.perkList.add(perk);
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Membership: ").append(name).append("\n");
+        sb.append("perkList=").append(perkList);
+        return sb.toString();
     }
 }
