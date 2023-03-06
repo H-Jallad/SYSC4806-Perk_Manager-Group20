@@ -25,8 +25,16 @@ public class Membership {
         this.name = name;
     }
 
+    public String getName(){
+        return name;
+    }
+
     public void addPerk(Perk perk) {
         this.perkList.add(perk);
+    }
+
+    public List<Perk> getPerkList(){
+        return perkList;
     }
     
     @Override
