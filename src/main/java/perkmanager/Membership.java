@@ -46,14 +46,6 @@ public class Membership {
         return perkList;
     }
 
-    public void addUser(User user) {
-        this.userList.add(user);
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
