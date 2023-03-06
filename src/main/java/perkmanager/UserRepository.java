@@ -7,12 +7,10 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MembershipRepository extends CrudRepository<Membership, Long>{
+public interface UserRepository extends CrudRepository<User, Long>{
 
     @Override
-    List<Membership> findAll();
+    List<User> findAll();
 
-    Optional<Membership> findById(Long id);
-
-    Membership findByName(String name);
+    Optional<User> findById(Long id);
 }

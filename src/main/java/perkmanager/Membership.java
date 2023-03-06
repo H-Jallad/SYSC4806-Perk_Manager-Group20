@@ -15,6 +15,8 @@ public class Membership {
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Perk> perkList;
 
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<User> userList;
     private String name;
 
     public Membership(){
@@ -33,10 +35,25 @@ public class Membership {
         this.perkList.add(perk);
     }
 
+    public void createPerk(String name, String description) {
+        Perk perk = new Perk();
+        perk.setName(name);
+        perk.setDescriptions(description);
+        addPerk(perk);
+    }
+
     public List<Perk> getPerkList(){
         return perkList;
     }
-    
+
+    public void addUser(User user) {
+        this.userList.add(user);
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
