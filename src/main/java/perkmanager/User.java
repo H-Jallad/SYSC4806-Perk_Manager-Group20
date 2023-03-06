@@ -3,8 +3,7 @@ package perkmanager;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 /**
  *  This class represents the Users in the Perk Manager system.
@@ -16,11 +15,10 @@ public class User {
 
     @Id
     @GeneratedValue
-    private long id;
-    private List<Membership> membershipList;
+    private Long id;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Perk> availablePerks;
+    private List<Membership> membershipList;
     private boolean signedIn; //To be used in a future iteration.
 
     /**
@@ -28,7 +26,7 @@ public class User {
      */
     public User() {
         membershipList = new ArrayList();
-        availablePerks = new ArrayList();
+        signedIn = false;
     }
 
     /**
@@ -38,37 +36,43 @@ public class User {
      * @param memberships The list of all memberships
      */
     public void createProfile(ArrayList<String> memberships) {
-        Perk tempPerk = new Perk();
         for (String membership : memberships) {
-            Membership tempMembership = verifyMembership(membership);
-            if (tempMembership != null) {
-                if (!membershipList.contains(tempMembership)) {
-                    membershipList.add(tempMembership);
-                }
-            }
+            addMembership(membership);
         }
-        availablePerks = tempPerk.retrieveAvailablePerks(membershipList);
+        signedIn = true;
     }
 
     /**
-     * Function used to check a potential membership and see if it is a valid membership.
+     * Function used to add a membership to the user profile.
      *
-     * @param membership The string containing the membership name
-     * @return The official membership if it is valid or null if invalid
+     * @param membership The membership to be added
      */
-    private Membership verifyMembership (String membership) {
-        Pattern pattern;
-        Matcher matcher;
-        boolean matchFound;
-        for (Membership m : Membership.values()) {
-            pattern = Pattern.compile(m.getMembershipName(), Pattern.CASE_INSENSITIVE);
-            matcher = pattern.matcher(membership);
-            matchFound = matcher.find();
-            if(matchFound) {
-                return m;
+    public void addMembership(Membership membership) {
+        if (membership != null) {
+            if (!membershipList.contains(membership)) {
+                membershipList.add(membership);
             }
         }
-        return null;
+    }
+
+    /**
+     * Function used to add a membership to the user profile.
+     *
+     * @param name The name of the membership to be added
+     */
+    public void addMembership(String name) {
+        MembershipService membershipService = new MembershipService();
+        Membership tempMembership = membershipService.findByName(name);
+        addMembership(tempMembership);
+    }
+
+    /**
+     * Function used to get a list of all the user's memberships.
+     *
+     * @return The list of all user's memberships
+     */
+    public List<Membership> getMembershipList() {
+        return membershipList;
     }
 
     public String toString() {
@@ -79,12 +83,6 @@ public class User {
             temp += "\n";
             temp += membership.toString();
         }
-
-        for (Perk perk: availablePerks) {
-            temp += "\n";
-            temp += perk.toString();
-        }
         return temp;
     }
-
 }

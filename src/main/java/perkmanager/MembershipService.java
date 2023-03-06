@@ -50,6 +50,16 @@ public class MembershipService {
         return membershipRepository.findById(id).orElse(null);
     }
 
+    public Membership findByName(String name) {
+        return membershipRepository.findByName(name);
+    }
+
+    public void updateMembership(String membershipName, String perkName, String perkDescription) {
+        Membership membership = findByName(membershipName);
+        membership.createPerk(perkName, perkDescription);
+        membershipRepository.save(membership);
+    }
+
     public void deleteById(Long id) {
         membershipRepository.deleteById(id);
     }
