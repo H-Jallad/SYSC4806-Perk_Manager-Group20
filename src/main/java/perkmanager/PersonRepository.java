@@ -11,5 +11,5 @@ public interface PersonRepository extends CrudRepository<Person, Long>{
     @Override
     List<Person> findAll();
 
-    Optional<Person> findById(Long id);
+    Person findById(long id);
 }

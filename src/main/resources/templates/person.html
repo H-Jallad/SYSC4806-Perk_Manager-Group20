@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Perk Manager</h1>
+<form action="#" th:action="@{/perk-manager/view}" th:object="${newPerson}" method="post">
+    <p><input type="submit" value="Add New User"/> </p>
+</form>
+</body>
+</html>
