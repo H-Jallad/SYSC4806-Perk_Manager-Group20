@@ -11,10 +11,10 @@ import java.util.List;
  * @author Santhosh Pradeepan
  */
 @Entity
-public class User {
+public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -24,7 +24,7 @@ public class User {
     /**
      * Constructor for class User.
      */
-    public User() {
+    public Person() {
         membershipList = new ArrayList();
         signedIn = false;
     }
@@ -84,5 +84,14 @@ public class User {
             temp += membership.toString();
         }
         return temp;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

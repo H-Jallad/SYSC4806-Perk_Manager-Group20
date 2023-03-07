@@ -19,28 +19,28 @@ public class MembershipService {
     @Autowired
     private MembershipRepository membershipRepository;
 
-    @PostConstruct
-    public void parseMembershipFile() throws IOException{
-        //Create an ObjectMapper instance
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        //Read the JSON file as a JsonNode
-        File jsonFile;
-        JsonNode jsonNode;
-
-        jsonFile = new ClassPathResource("memberships.json").getFile();
-        jsonNode = objectMapper.readTree(jsonFile);
-
-        //Get the array of memberships
-        JsonNode membershipsArray = jsonNode.get("membership");
-
-        //Iterate over the array and convert each element to a Membership object
-        for (JsonNode membershipNode : membershipsArray) {
-            Membership membership = objectMapper.convertValue(membershipNode, Membership.class);
-            //Save the membership into your repository
-            membershipRepository.save(membership);
-        }
-    }
+//    @PostConstruct
+//    public void parseMembershipFile() throws IOException{
+//        //Create an ObjectMapper instance
+//        ObjectMapper objectMapper = new ObjectMapper();
+//
+//        //Read the JSON file as a JsonNode
+//        File jsonFile;
+//        JsonNode jsonNode;
+//
+//        jsonFile = new ClassPathResource("memberships.json").getFile();
+//        jsonNode = objectMapper.readTree(jsonFile);
+//
+//        //Get the array of memberships
+//        JsonNode membershipsArray = jsonNode.get("membership");
+//
+//        //Iterate over the array and convert each element to a Membership object
+//        for (JsonNode membershipNode : membershipsArray) {
+//            Membership membership = objectMapper.convertValue(membershipNode, Membership.class);
+//            //Save the membership into your repository
+//            membershipRepository.save(membership);
+//        }
+//    }
 
     public List<Membership> findAll() {
         return membershipRepository.findAll();
