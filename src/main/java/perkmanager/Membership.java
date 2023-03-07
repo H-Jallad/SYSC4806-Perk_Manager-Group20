@@ -9,14 +9,14 @@ import jakarta.persistence.*;
 public class Membership {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Perk> perkList;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<User> userList;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Person> personList;
     private String name;
 
     public Membership(){
@@ -52,5 +52,13 @@ public class Membership {
         sb.append("Membership: ").append(name).append("\n");
         sb.append("perkList=").append(perkList);
         return sb.toString();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
