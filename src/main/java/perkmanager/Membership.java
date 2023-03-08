@@ -37,8 +37,8 @@ public class Membership {
 
     public void createPerk(String name, String description) {
         Perk perk = new Perk();
-        perk.setName(name);
-        perk.setDescriptions(description);
+        perk.setPerkName(name);
+        perk.setPerkDescription(description);
         addPerk(perk);
     }
 

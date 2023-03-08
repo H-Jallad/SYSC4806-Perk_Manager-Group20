@@ -12,7 +12,7 @@ public interface MembershipRepository extends CrudRepository<Membership, Long>{
     @Override
     List<Membership> findAll();
 
-    Optional<Membership> findById(long id);
+    Membership findById(long id);
 
     Membership findByName(String name);
 }

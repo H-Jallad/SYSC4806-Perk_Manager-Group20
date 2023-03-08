@@ -12,34 +12,34 @@ public class Perk {
     @GeneratedValue
     private Long id;
 
-    private String description; 
-    private String name;
+    private String perkDescription;
+    private String perkName;
 
     public Perk() {
 
     }
 
-    public void setDescriptions(String description){
-        this.description = description;
+    public void setPerkDescription(String description){
+        this.perkDescription = description;
     }
 
-    public String getDescription(){
-        return description;
+    public String getPerkDescription(){
+        return perkDescription;
     }
 
-    public void setName(String name){
-        this.name = name;
+    public void setPerkName(String name){
+        this.perkName = name;
     }
 
-    public String getName(){
-        return name;
+    public String getPerkName(){
+        return perkName;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append('\n');
-        sb.append(description);
+        sb.append(perkName).append('\n');
+        sb.append(perkDescription);
         return sb.toString();
     }
 }

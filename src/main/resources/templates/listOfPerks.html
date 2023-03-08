@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perk Details</title>
+</head>
+<body>
+<h1>Perk Details</h1>
+<p>Selected Membership: <span th:text="${membership.name}"></span></p>
+<h3>Perk Added:</h3>
+<p>Perk Name: <span th:text="${perk.perkName}"></span></p>
+<p>Perk Description: <span th:text="${perk.perkDescription}"></span></p>
+<a href="/perks-view">View all memberships and perks</a>
+</body>
+</html>
