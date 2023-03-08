@@ -46,7 +46,6 @@ public class WebTestPerks {
 
     @Test
     public void TestViewAllPerks() throws Exception {
-
         Membership membership = new Membership();
         membership.setName("CAA");
         membershipRepository.save(membership);
