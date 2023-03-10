@@ -2,6 +2,7 @@ package perkmanager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 
@@ -41,5 +42,23 @@ public class Perk {
         sb.append(perkName).append('\n');
         sb.append(perkDescription);
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Perk that = (Perk) o;
+        return Objects.equals(perkName, that.perkName) && Objects.equals(perkDescription, that.perkDescription);
+    }
+
+    // Override hashCode() method to generate a hash code for Membership objects
+    @Override
+    public int hashCode() {
+        return Objects.hash(perkName, perkDescription);
     }
 }

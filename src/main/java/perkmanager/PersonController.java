@@ -35,10 +35,14 @@ public class PersonController {
     @PostMapping("/addPerk")
     public String addPerk(@ModelAttribute Membership membership, @ModelAttribute Perk perk, Model model) {
         Membership existingMembership = membershipRepository.findByName(membership.getName());
-        existingMembership.addPerk(perk);
-        membershipRepository.save(existingMembership);
-        model.addAttribute("perk", perk);
-        model.addAttribute(("membership"),existingMembership);
+        if(existingMembership != null){
+            if (!existingMembership.getPerkList().contains(perk)){
+                existingMembership.addPerk(perk);
+                membershipRepository.save(existingMembership);
+                model.addAttribute("perk", perk);
+                model.addAttribute(("membership"),existingMembership);
+            }
+        }
         return "listOfPerks";
     }
     @GetMapping("/perks-view")
@@ -57,14 +61,16 @@ public class PersonController {
 
     @PostMapping("/membership")
     public String membershipSubmit(@ModelAttribute Membership membership, Model model) {
-        membershipRepository.save(membership);
         Person person = personRepository.findById(1);
-        person.addMembership(membership);
-        personRepository.save(person);
-        model.addAttribute("membership", membership);
+        if (!person.getMembershipList().contains(membership)) {
+            membershipRepository.save(membership);
+            person.addMembership(membership);
+            personRepository.save(person);
+            model.addAttribute("membership", membership);
+        }
         return "display-membership";
-    }
 
+    }
     @GetMapping("/memberships-view")
     public String membershipView(Model model){
         Person person = personRepository.findById(1);
