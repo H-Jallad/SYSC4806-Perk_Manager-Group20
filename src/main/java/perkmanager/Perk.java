@@ -16,8 +16,10 @@ public class Perk {
     private String perkDescription;
     private String perkName;
 
-    public Perk() {
+    private int useful;
 
+    public Perk() {
+        useful = 0;
     }
 
     public void setPerkDescription(String description){
@@ -34,6 +36,18 @@ public class Perk {
 
     public String getPerkName(){
         return perkName;
+    }
+
+    public void upvote() {
+        useful++;
+    }
+
+    public void downvote() {
+        useful--;
+    }
+
+    public int getUsefulness() {
+        return useful;
     }
 
     @Override
