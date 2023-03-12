@@ -19,6 +19,9 @@ public class MembershipService {
     @Autowired
     private MembershipRepository membershipRepository;
 
+    @Autowired
+    private PerkRepository perkRepository;
+
 //    @PostConstruct
 //    public void parseMembershipFile() throws IOException{
 //        //Create an ObjectMapper instance
@@ -54,13 +57,60 @@ public class MembershipService {
         return membershipRepository.findByName(name);
     }
 
+    public List<Perk> findAllPerks() {
+        return perkRepository.findAll();
+    }
+
+    public Perk findByPerkId(Long id) {
+        return perkRepository.findById(id).orElse(null);
+    }
+
+    public Perk findByPerkName(String perkName) {
+        return perkRepository.findByPerkName(perkName);
+    }
+
     public void updateMembership(String membershipName, String perkName, String perkDescription) {
         Membership membership = findByName(membershipName);
-        membership.createPerk(perkName, perkDescription);
+        Perk perk = membership.createPerk(perkName, perkDescription);
         membershipRepository.save(membership);
+        perkRepository.save(perk);
     }
 
     public void deleteById(Long id) {
         membershipRepository.deleteById(id);
+    }
+
+    public List<Perk> sortPerks(List<Perk> perks) {
+        int length = perks.size();
+        //Bubble sort algorithm
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 0; j < length - 1 - i; j++) {
+                if (comparePerkExpirationDate(perks.get(j), perks.get(j + 1))) {
+                    Perk tempPerk = perks.get(j);
+                    //perks.remove(j);
+                    perks.set(j, perks.get(j + 1));
+                    //perks.remove(j + 1);
+                    perks.set(j + 1, tempPerk);
+                }
+            }
+        }
+        return perks;
+    }
+
+    private boolean comparePerkExpirationDate(Perk perk1, Perk perk2) {
+        if (perk2.getExpirationYear() < perk1.getExpirationYear()) {
+            return true;
+        }
+        else if (perk2.getExpirationYear() == perk1.getExpirationYear()) {
+            if (perk2.getExpirationMonth() < perk1.getExpirationMonth()) {
+                return true;
+            }
+            else if (perk2.getExpirationMonth() == perk1.getExpirationMonth()) {
+                if (perk2.getExpirationDay() < perk1.getExpirationDay()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
