@@ -36,11 +36,12 @@ public class Membership {
         this.perkList.add(perk);
     }
 
-    public void createPerk(String name, String description) {
+    public Perk createPerk(String name, String description) {
         Perk perk = new Perk();
         perk.setPerkName(name);
         perk.setPerkDescription(description);
         addPerk(perk);
+        return perk;
     }
 
     public List<Perk> getPerkList(){

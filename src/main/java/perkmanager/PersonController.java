@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -20,6 +21,10 @@ public class PersonController {
 
     @Autowired
     MembershipRepository membershipRepository;
+
+    @Autowired
+    PerkRepository perkRepository;
+
     @RequestMapping("/users")
     public ResponseEntity<Iterable<Person>> getAllUsers() {
         Iterable<Person> people = personRepository.findAll();
@@ -38,6 +43,7 @@ public class PersonController {
         if(existingMembership != null){
             if (!existingMembership.getPerkList().contains(perk)){
                 existingMembership.addPerk(perk);
+                perkRepository.save(perk);
                 membershipRepository.save(existingMembership);
                 model.addAttribute("perk", perk);
                 model.addAttribute(("membership"),existingMembership);
@@ -80,6 +86,14 @@ public class PersonController {
         return "personsMemberships";
     }
 
+    @GetMapping("/all-perks-view")
+    public String allPerksView(Model model) {
+        List<Perk> perks = perkRepository.findAll();
+        List<Perk> sortedPerks = membershipService.sortPerks(perks);
+        model.addAttribute("perks", sortedPerks);
+
+        return "viewAllPerks";
+    }
 
     @GetMapping("/perk-manager")
     public String addUser(Model model)

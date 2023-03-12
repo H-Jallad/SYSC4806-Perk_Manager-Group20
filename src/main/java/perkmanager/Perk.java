@@ -1,7 +1,5 @@
 package perkmanager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -10,13 +8,21 @@ import jakarta.persistence.*;
 public class Perk {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String perkDescription;
     private String perkName;
 
     private int useful;
+
+    private String expirationDate;
+
+    private int expirationYear;
+
+    private int expirationMonth;
+
+    private int expirationDay;
 
     public Perk() {
         useful = 0;
@@ -50,11 +56,36 @@ public class Perk {
         return useful;
     }
 
+    public void setExpirationDate(String date) {
+        expirationDate = date;
+        String[] dateArray = date.split("-");
+        expirationYear = Integer.parseInt(dateArray[0]);
+        expirationMonth = Integer.parseInt(dateArray[1]);
+        expirationDay = Integer.parseInt(dateArray[2]);
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    public int getExpirationYear() {
+        return expirationYear;
+    }
+
+    public int getExpirationMonth() {
+        return expirationMonth;
+    }
+
+    public int getExpirationDay() {
+        return  expirationDay;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(perkName).append('\n');
-        sb.append(perkDescription);
+        sb.append(perkDescription).append('\n');
+        sb.append(expirationDate);
         return sb.toString();
     }
 
