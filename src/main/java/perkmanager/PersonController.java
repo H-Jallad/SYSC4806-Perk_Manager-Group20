@@ -124,7 +124,7 @@ public class PersonController {
         List<Membership> memberships = new ArrayList<>();
         Membership membership = new Membership();
         membership.setName("CAA");
-        membership.setImage("/img/memberships/CAA.png");
+        membership.setImagePath("/img/memberships/CAA.png");
         memberships.add(membership);
         // add memberships data to model
         model.addAttribute("memberships", memberships);

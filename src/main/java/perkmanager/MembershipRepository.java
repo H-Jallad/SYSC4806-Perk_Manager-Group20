@@ -14,4 +14,6 @@ public interface MembershipRepository extends CrudRepository<Membership, Long>{
     Membership findById(long id);
 
     Membership findByName(String name);
+
+    Membership findByImagePath(String imagePath);
 }
