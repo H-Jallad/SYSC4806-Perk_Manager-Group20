@@ -121,13 +121,17 @@ public class PersonController {
 
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {
-        List<Membership> memberships = new ArrayList<>();
-        Membership membership = new Membership();
-        membership.setName("CAA");
-        membership.setImagePath("/img/memberships/CAA.png");
-        memberships.add(membership);
+//        Person testPerson = new Person();
+//        List<Membership> memberships = new ArrayList<>();
+//        Membership membership = new Membership();
+//        membership.setName("CAA");
+//        membership.setImagePath("/img/memberships/CAA.png");
+//
+//        memberships.add(membership);
+//        testPerson.addMembership(membership);
+//        personRepository.save(testPerson);
         // add memberships data to model
-        model.addAttribute("memberships", memberships);
+        model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }
