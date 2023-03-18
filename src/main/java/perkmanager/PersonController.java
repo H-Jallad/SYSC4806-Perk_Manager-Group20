@@ -101,7 +101,7 @@ public class PersonController {
         Person newPerson = new Person();
         model.addAttribute("newPerson", newPerson);
         //personRepository.save(newPerson);
-        return "person";
+        return "LandingPage";
     }
 
     @PostMapping("/perk-manager/view")

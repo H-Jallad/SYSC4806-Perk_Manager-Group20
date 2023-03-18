@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded", function(){
         .then(data => {
             if (data.loggedIn) {
                 // If the user is logged in, show the "My Membership" button and change the "Login" button to a "Logout" button
-                document.querySelector("button[data-target='userMembership.html']").style.display = "inline-block";
-                let loginButton = document.querySelector("a[href='login.html']");
+                document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "inline-block";
+                let loginButton = document.querySelector("a[href='/templates/login.html']");
                 loginButton.textContent = "Logout";
-                loginButton.setAttribute("href", "logout.html");
+                loginButton.setAttribute("href", "/templates/logout.html");
             } else {
                 // If the user is not logged in, hide the "My Membership" button
-                document.querySelector("button[data-target='userMembership.html']").style.display = "none";
+                document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "none";
             }
         });
 });
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function(){
 //have the home.html loaded by default
 document.addEventListener("DOMContentLoaded", function(){
     // Fetch home.html content when page loads
-    fetch("home.html")
+    fetch("/templates/home.html")
         .then(response => response.text())
         .then(result => {
             document.querySelector("#content").innerHTML = result;
