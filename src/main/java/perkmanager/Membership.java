@@ -20,7 +20,8 @@ public class Membership {
     private List<Person> personList;
     private String name;
 
-    private String image;
+
+    private String imagePath;
 
     public Membership(){
         perkList = new ArrayList<>();
@@ -70,12 +71,12 @@ public class Membership {
         return Objects.equals(name, that.name);
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     // Override hashCode() method to generate a hash code for Membership objects
