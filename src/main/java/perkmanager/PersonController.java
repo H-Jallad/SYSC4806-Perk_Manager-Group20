@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -60,8 +61,13 @@ public class PersonController {
 
     @GetMapping("/membership")
     public String showMembershipForm(Model model) {
-    model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
-    model.addAttribute("membership", new Membership());
+        List<Membership> memberships = new ArrayList<>();
+        Membership membership = new Membership();
+        membership.setName("CAA");
+        memberships.add(membership);
+        model.addAttribute(memberships);
+    //model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
+    //model.addAttribute("membership", new Membership());
     return "membership";
     }
 
@@ -112,4 +118,17 @@ public class PersonController {
         return "result";
     }
 
+
+    @GetMapping("/my-memberships-content")
+    public String myMembershipsContent(Model model) {
+        List<Membership> memberships = new ArrayList<>();
+        Membership membership = new Membership();
+        membership.setName("CAA");
+        membership.setImage("/img/memberships/CAA.png");
+        memberships.add(membership);
+        // add memberships data to model
+        model.addAttribute("memberships", memberships);
+        // return view name for Thymeleaf fragment
+        return "userMembership :: content";
+    }
 }
