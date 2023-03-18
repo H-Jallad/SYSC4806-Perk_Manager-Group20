@@ -8,49 +8,50 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-  <div class="container py-3">
-    <h1 class="mb-3">My Memberships</h1>
 
-    <!--if there are no memberships, this will not be displayed-->
-    <div th:if="${memberships != null and not #lists.isEmpty(memberships)}">
-      <div th:each="membership : ${memberships}" class="row border-bottom border-3 py-3">
-          <div class="col-12 col-md-4">
-            <img th:src="${membership.image}" th:alt="${membership.name}" class="img-fluid">
-          </div>
-          <div class="col-12 col-md-4 d-flex align-items-center">
-            <h2 th:text="${membership.name}"></h2>
-          </div>
-          <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
-            <button type="button" class="btn btn-danger btn-sm">Remove Membership</button>
-          </div>
-      </div>
-    </div>
+  <div th:fragment="content" class="container py-3">
 
-    <div class="col py-3 d-flex justify-content-center">
-      <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="addMembershipDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            + Add Membership
-        </button>
-        <ul class="dropdown-menu p-3" aria-labelledby="addMembershipDropdown">
-
-            <form method="post" action="/membership">
-
-              <div class="form-group mb-2">
-                <label for="name">Membership Type</label>
-                <select class="form-control" name="name">
-                    <option th:each="membership : ${memberships}" th:value="${membership.name}" th:text="${membership.name}"></option>
-                </select>
+      <h1 class="mb-3">My Memberships</h1>
+      <!--if there are no memberships, this will not be displayed-->
+      <div th:if="${memberships != null and not #lists.isEmpty(memberships)}">
+          <div th:each="membership : ${memberships}" class="row border-bottom border-3 py-3">
+              <div class="col-12 col-md-4">
+                  <img th:src="${membership.image}" th:alt="${membership.name}" class="img-fluid">
               </div>
-
-                <button type="submit" class="btn btn-primary mb-2">Save</button><br />
-
-            </form>
-
-        </ul>
+              <div class="col-12 col-md-4 d-flex align-items-center">
+                  <h2 th:text="${membership.name}"></h2>
+              </div>
+              <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
+                  <button type="button" class="btn btn-danger btn-sm">Remove Membership</button>
+              </div>
+          </div>
       </div>
-    </div>
 
+      <div class="col py-3 d-flex justify-content-center">
+          <div class="dropdown">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="addMembershipDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  + Add Membership
+              </button>
+              <ul class="dropdown-menu p-3" aria-labelledby="addMembershipDropdown">
+
+                  <form method="post" action="/membership">
+
+                      <div class="form-group mb-2">
+                          <label for="name">Membership Type</label>
+                          <select class="form-control" name="name">
+                              <option th:each="membership : ${memberships}" th:value="${membership.name}" th:text="${membership.name}"></option>
+                          </select>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary mb-2">Save</button><br />
+
+                  </form>
+
+              </ul>
+          </div>
+      </div>
   </div>
+
 </body>
 </html>
 
