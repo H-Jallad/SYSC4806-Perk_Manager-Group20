@@ -1,15 +1,20 @@
 package perkmanager;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -25,6 +30,8 @@ public class PersonController {
 
     @Autowired
     PerkRepository perkRepository;
+
+    private AuthenticationManager authenticationManager;
 
     @RequestMapping("/users")
     public ResponseEntity<Iterable<Person>> getAllUsers() {
@@ -101,21 +108,25 @@ public class PersonController {
         return "viewAllPerks";
     }
 
-    @GetMapping("/perk-manager")
+    @GetMapping("/signup")
     public String addUser(Model model)
     {
-        Person newPerson = new Person();
-        model.addAttribute("newPerson", newPerson);
-        //personRepository.save(newPerson);
-        return "LandingPage";
+        return "signup";
     }
 
-    @PostMapping("/perk-manager/view")
+    @PostMapping("/signup")
     public String userSubmit(@ModelAttribute Person newPerson, Model model)
     {
         personRepository.save(newPerson);
         model.addAttribute("newPerson", newPerson);
-        return "result";
+        return "login";
+    }
+
+
+    @GetMapping("/LandingPage")
+    public String homePage(Model model)
+    {
+        return "LandingPage";
     }
 
 
@@ -131,4 +142,5 @@ public class PersonController {
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }
+
 }

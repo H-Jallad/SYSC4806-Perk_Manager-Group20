@@ -21,6 +21,27 @@ public class Person {
     private List<Membership> membershipList;
     private boolean signedIn; //To be used in a future iteration.
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String username;
+    private String password;
+
+    private String name;
+
     /**
      * Constructor for class User.
      */
