@@ -3,9 +3,7 @@ package perkmanager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +29,6 @@ public class PersonController {
     @Autowired
     PerkRepository perkRepository;
 
-    private AuthenticationManager authenticationManager;
 
     @RequestMapping("/users")
     public ResponseEntity<Iterable<Person>> getAllUsers() {
@@ -122,13 +119,13 @@ public class PersonController {
         return "login";
     }
 
-
     @GetMapping("/LandingPage")
-    public String homePage(Model model)
-    {
+    public String homePage(Authentication authentication, Model model) {
+        String username = authentication.getName();
+        Person person = personRepository.findByUsername(username);
+        model.addAttribute("person", person);
         return "LandingPage";
     }
-
 
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {

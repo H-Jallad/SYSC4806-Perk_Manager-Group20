@@ -1,6 +1,9 @@
 package perkmanager;
 
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +37,8 @@ public class Person {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
 
     private String username;
