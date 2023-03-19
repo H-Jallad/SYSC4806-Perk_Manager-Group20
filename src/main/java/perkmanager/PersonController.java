@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -121,11 +122,13 @@ public class PersonController {
 
     @GetMapping("/LandingPage")
     public String homePage(Authentication authentication, Model model) {
-        String username = authentication.getName();
-        Person person = personRepository.findByUsername(username);
-        model.addAttribute("person", person);
+        if(authentication!=null) {
+            String username = authentication.getName();
+            System.out.println(username);
+        }
         return "LandingPage";
     }
+
 
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {
@@ -140,4 +143,12 @@ public class PersonController {
         return "userMembership :: content";
     }
 
+    @GetMapping("/auth-status")
+    public HashMap<String, Boolean> getAuthStatus(Authentication authentication) {
+        HashMap<String, Boolean> response = new HashMap<>();
+        if(authentication!=null) {
+            response.put("loggedIn", true); // Set the value to true if the user is logged in
+        }
+        return response;
+    }
 }
