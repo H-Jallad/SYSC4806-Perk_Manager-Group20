@@ -4,17 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PersonController {
@@ -124,7 +119,6 @@ public class PersonController {
     public String homePage(Authentication authentication, Model model) {
         if(authentication!=null) {
             String username = authentication.getName();
-            System.out.println(username);
         }
         return "LandingPage";
     }
@@ -144,11 +138,21 @@ public class PersonController {
     }
 
     @GetMapping("/auth-status")
-    public HashMap<String, Boolean> getAuthStatus(Authentication authentication) {
-        HashMap<String, Boolean> response = new HashMap<>();
-        if(authentication!=null) {
-            response.put("loggedIn", true); // Set the value to true if the user is logged in
+    @ResponseBody
+    public Map<String, Boolean> getAuthStatus() {
+        boolean loggedIn;
+        Map<String, Boolean> result = new HashMap<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getName());
+        if(auth.getName()!="anonymousUser"){
+             loggedIn = auth.isAuthenticated();
         }
-        return response;
+        else{
+             loggedIn = false;
+        }
+        System.out.println(loggedIn);
+        result.put("loggedIn", loggedIn);
+        return result;
     }
+
 }

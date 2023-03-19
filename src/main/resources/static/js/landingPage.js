@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if (data.loggedIn) {
                 // If the user is logged in, show the "My Membership" button and change the "Login" button to a "Logout" button
                 document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "inline-block";
-                let loginButton = document.querySelector("a[href='/templates/login.html']");
+                //let loginButton = document.querySelector("a[href='/templates/login.html']");
                 loginButton.textContent = "Logout";
                 loginButton.setAttribute("href", "/templates/logout.html");
             } else {
