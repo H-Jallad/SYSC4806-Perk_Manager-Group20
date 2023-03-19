@@ -1,10 +1,13 @@
 package perkmanager;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -139,20 +142,30 @@ public class PersonController {
 
     @GetMapping("/auth-status")
     @ResponseBody
-    public Map<String, Boolean> getAuthStatus() {
+    public Map<String, Object> getAuthStatus() {
         boolean loggedIn;
-        Map<String, Boolean> result = new HashMap<>();
+        String userName;
+        Map<String, Object> result = new HashMap<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(auth.getName());
         if(auth.getName()!="anonymousUser"){
-             loggedIn = auth.isAuthenticated();
+            loggedIn = auth.isAuthenticated();
+            userName = auth.getName();
+        } else {
+            loggedIn = false;
+            userName = "";
         }
-        else{
-             loggedIn = false;
-        }
-        System.out.println(loggedIn);
         result.put("loggedIn", loggedIn);
+        result.put("userName", userName);
         return result;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "LandingPage";
     }
 
 }

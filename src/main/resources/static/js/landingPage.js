@@ -4,12 +4,31 @@ document.addEventListener("DOMContentLoaded", function(){
         .then(response => response.json())
         .then(data => {
             if (data.loggedIn) {
-                // If the user is logged in, show the "My Membership" button and change the "Login" button to a "Logout" button
-                document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "inline-block";
-                //let loginButton = document.querySelector("a[href='/templates/login.html']");
-                loginButton.textContent = "Logout";
-                loginButton.setAttribute("href", "/templates/logout.html");
-            } else {
+                // If the user is logged in, create a new element with the welcome message and the user's name
+                let welcomeMessage = document.createElement("span");
+                welcomeMessage.textContent = "Welcome, " + data.userName;
+
+                // Create a logout button element
+                let logoutButton = document.createElement("button");
+                logoutButton.textContent = "Logout";
+                logoutButton.setAttribute("data-target", "/templates/logout.html");
+                logoutButton.setAttribute("class", "btn btn-light");
+                logoutButton.addEventListener("click", function() {
+                    window.location.href = "/logout";
+                });
+
+                // Create a container element to hold the welcome message and logout button
+                let userContainer = document.createElement("div");
+                userContainer.setAttribute("class", "d-flex justify-content-between align-items-center");
+                userContainer.appendChild(welcomeMessage);
+                userContainer.appendChild(logoutButton);
+
+                // Replace the login button with the container element
+                let loginButton = document.querySelector("button[data-target='/templates/login.html']");
+                if (loginButton) {
+                    loginButton.parentNode.replaceChild(userContainer, loginButton);
+                }
+            }else {
                 // If the user is not logged in, hide the "My Membership" button
                 document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "none";
                 document.querySelector("button[data-target='/templates/login.html']").addEventListener("click", function() {

@@ -37,7 +37,12 @@ public class WebSecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler()) // use the success handler
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout() // enable logout
+                .logoutSuccessUrl("/logout") // redirect to login page after logout
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
 
         return http.build();
     }
