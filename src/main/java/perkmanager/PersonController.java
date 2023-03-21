@@ -1,8 +1,13 @@
 package perkmanager;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -63,8 +68,8 @@ public class PersonController {
         membership.setName("CAA");
         memberships.add(membership);
         model.addAttribute(memberships);
-    //model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
-    //model.addAttribute("membership", new Membership());
+    model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
+    model.addAttribute("membership", new Membership());
     return "membership";
     }
 
@@ -98,35 +103,40 @@ public class PersonController {
         return "viewAllPerks";
     }
 
-    @GetMapping("/perk-manager")
+    @GetMapping("/signup")
     public String addUser(Model model)
     {
-        Person newPerson = new Person();
-        model.addAttribute("newPerson", newPerson);
-        //personRepository.save(newPerson);
-        return "LandingPage";
+        return "signup";
     }
 
-    @PostMapping("/perk-manager/view")
+    @PostMapping("/signup")
     public String userSubmit(@ModelAttribute Person newPerson, Model model)
     {
         personRepository.save(newPerson);
         model.addAttribute("newPerson", newPerson);
-        return "result";
+        return "login";
+    }
+
+    @GetMapping("/LandingPage")
+    public String homePage(Authentication authentication, Model model) {
+        if(authentication!=null) {
+            String username = authentication.getName();
+        }
+        return "LandingPage";
     }
 
 
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {
-//        Person testPerson = new Person();
-//        List<Membership> memberships = new ArrayList<>();
-//        Membership membership = new Membership();
-//        membership.setName("CAA");
-//        membership.setImagePath("/img/memberships/CAA.png");
-//
-//        memberships.add(membership);
-//        testPerson.addMembership(membership);
-//        personRepository.save(testPerson);
+        Person testPerson = new Person();
+        List<Membership> memberships = new ArrayList<>();
+        Membership membership = new Membership();
+        membership.setName("CAA");
+        membership.setImagePath("/img/memberships/CAA.png");
+
+        memberships.add(membership);
+        testPerson.addMembership(membership);
+        personRepository.save(testPerson);
         // add memberships data to model
         model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
         // return view name for Thymeleaf fragment
@@ -137,26 +147,26 @@ public class PersonController {
     public String myPerksContent(Model model) {
 
         // following code is for testing
-//        List<Perk> perks = new ArrayList<>();
-//
-//        Perk perk = new Perk();
-//
-//        perk.setPerkName("TEsting");
-//        perk.setPerkDescription("This is just a test");
-//        perk.setExpirationDate("2023-08-09");
-//
-//        Perk perk2 = new Perk();
-//
-//        perk2.setPerkName("TEsting2");
-//        perk2.setPerkDescription("This is just a test2");
-//        perk2.setExpirationDate("2023-08-10");
-//
-//        perkRepository.save(perk);
-//        perkRepository.save(perk2);
-//        perks.add(perk);
-//        perks.add(perk2);
+        List<Perk> perks = new ArrayList<>();
 
-        //retrieve current logged in user perk list
+        Perk perk = new Perk();
+
+        perk.setPerkName("TEsting");
+        perk.setPerkDescription("This is just a test");
+        perk.setExpirationDate("2023-08-09");
+
+        Perk perk2 = new Perk();
+
+        perk2.setPerkName("TEsting2");
+        perk2.setPerkDescription("This is just a test2");
+        perk2.setExpirationDate("2023-08-10");
+
+        perkRepository.save(perk);
+        perkRepository.save(perk2);
+        perks.add(perk);
+        perks.add(perk2);
+
+//        retrieve current logged in user perk list
 
         model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
@@ -177,5 +187,35 @@ public class PersonController {
         return perk;
     }
 
+
+
+    @GetMapping("/auth-status")
+    @ResponseBody
+    public Map<String, Object> getAuthStatus() {
+        boolean loggedIn;
+        String userName;
+        Map<String, Object> result = new HashMap<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getName()!="anonymousUser"){
+            loggedIn = auth.isAuthenticated();
+            userName = auth.getName();
+        } else {
+            loggedIn = false;
+            userName = "";
+        }
+        result.put("loggedIn", loggedIn);
+        result.put("userName", userName);
+        return result;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        System.out.println(auth.getName());
+        return "LandingPage";
+    }
 
 }
