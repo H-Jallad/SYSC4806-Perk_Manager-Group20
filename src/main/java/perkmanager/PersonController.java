@@ -28,7 +28,6 @@ public class PersonController {
     @Autowired
     PerkRepository perkRepository;
 
-
     @RequestMapping("/users")
     public ResponseEntity<Iterable<Person>> getAllUsers() {
         Iterable<Person> people = personRepository.findAll();
@@ -59,7 +58,7 @@ public class PersonController {
     public String perksView(Model model){
         List<Membership> memberships = membershipRepository.findAll();
         model.addAttribute("memberships", memberships);
-        return "viewAllPerks";
+        return "allPerks";
     }
 
     @GetMapping("/membership")
@@ -69,8 +68,8 @@ public class PersonController {
         membership.setName("CAA");
         memberships.add(membership);
         model.addAttribute(memberships);
-    //model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
-    //model.addAttribute("membership", new Membership());
+    model.addAttribute("membershipTypes", Arrays.asList("CAA", "AMEX"));
+    model.addAttribute("membership", new Membership());
     return "membership";
     }
 
@@ -130,42 +129,65 @@ public class PersonController {
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {
         Person testPerson = new Person();
-        List<Membership> memberships = membershipRepository.findAll();
-//        List<Membership> memberships = new ArrayList<>();
-//        Membership membership1 = new Membership();
-//        Membership membership2 = new Membership();
-//        Membership membership3 = new Membership();
-//        Membership membership4 = new Membership();
-//        membership1.setName("CAA");
-//        membership1.setImagePath("/img/memberships/CAA.png");
-//        membership2.setName("AMEX");
-//        membership2.setImagePath("/img/memberships/AMEX.png");
-//        membership3.setName("Air Miles");
-//        membership3.setImagePath("/img/memberships/Air-Miles.png");
-//        membership4.setName("Capital One");
-//        membership4.setImagePath("/img/memberships/Capital-One.png");
-//
-//        memberships.add(membership1);
-//        memberships.add(membership2);
-//        memberships.add(membership3);
-//        memberships.add(membership4);
-//        membershipRepository.save(membership1);
-//        membershipRepository.save(membership2);
-//        membershipRepository.save(membership3);
-//        membershipRepository.save(membership4);
-        //testPerson.addMembership(membership1);
-        //testPerson.addMembership(membership2);
-        //testPerson.addMembership(membership3);
-        //testPerson.addMembership(membership4);
+        List<Membership> memberships = new ArrayList<>();
+        Membership membership = new Membership();
+        membership.setName("CAA");
+        membership.setImagePath("/img/memberships/CAA.png");
 
-        model.addAttribute("memberships", memberships);
+        memberships.add(membership);
+        testPerson.addMembership(membership);
         personRepository.save(testPerson);
-        //model.addAttribute("memberships", memberships);
         // add memberships data to model
-        //model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
+        model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }
+
+    @GetMapping("/my-perks-content")
+    public String myPerksContent(Model model) {
+
+        // following code is for testing
+        List<Perk> perks = new ArrayList<>();
+
+        Perk perk = new Perk();
+
+        perk.setPerkName("TEsting");
+        perk.setPerkDescription("This is just a test");
+        perk.setExpirationDate("2023-08-09");
+
+        Perk perk2 = new Perk();
+
+        perk2.setPerkName("TEsting2");
+        perk2.setPerkDescription("This is just a test2");
+        perk2.setExpirationDate("2023-08-10");
+
+        perkRepository.save(perk);
+        perkRepository.save(perk2);
+        perks.add(perk);
+        perks.add(perk2);
+
+//        retrieve current logged in user perk list
+
+        model.addAttribute("perks", perks);
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+    }
+
+    @PostMapping("/vote/{count}/{id}")
+    @ResponseBody
+    public Perk votePerk(@PathVariable("count") int count, @PathVariable("id") Long perkId, @RequestBody Map<String, String> payload) {
+        String voteType = payload.get("voteType");
+        Perk perk = perkRepository.findById(perkId).orElseThrow(() -> new IllegalArgumentException("Invalid perk ID"));
+        if (voteType.equals("UPVOTE")) {
+            perk.upvote(count);
+        } else {
+            perk.downvote(count);
+        }
+        perkRepository.save(perk);
+        return perk;
+    }
+
+
 
     @GetMapping("/auth-status")
     @ResponseBody
@@ -192,6 +214,7 @@ public class PersonController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+        System.out.println(auth.getName());
         return "LandingPage";
     }
 

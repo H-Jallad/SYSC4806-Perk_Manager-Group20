@@ -16,6 +16,7 @@
       </div>
       <div th:if="${param.logout}" class="alert alert-success" role="alert">
         You have been logged out.
+        <a th:href="@{/LandingPage}" class="btn btn-primary">Continue as Guest</a>
       </div>
       <form th:action="@{/login}" method="post">
         <div class="mb-3">
@@ -30,6 +31,7 @@
         <!-- existing login form code -->
         <a href="/signup">Register</a>
       </form>
+      <a th:href="@{/LandingPage}" class="btn btn-primary">Continue as Guest</a>
 
     </div>
   </div>

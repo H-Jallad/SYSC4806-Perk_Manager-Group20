@@ -30,19 +30,14 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .anyRequest().permitAll()
                 )
                 .formLogin()
                 .loginPage("/login")
                 .successHandler(myAuthenticationSuccessHandler()) // use the success handler
-                .permitAll()
-                .and()
-                .logout() // enable logout
-                .logoutSuccessUrl("/logout") // redirect to login page after logout
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
+                .permitAll();
 
         return http.build();
     }
