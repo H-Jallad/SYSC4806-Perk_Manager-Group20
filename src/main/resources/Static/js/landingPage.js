@@ -21,40 +21,27 @@ document.addEventListener("DOMContentLoaded", function(){
         button.addEventListener("click", function(e){
             e.preventDefault();
             let target = this.getAttribute("data-target");
-            // If the "My Membership" button is clicked
-            if (target === '/templates/userMembership.html') {
-                // Fetch updated content from /my-memberships-content
-                fetch('/my-memberships-content')
-                    .then(response => response.text())
-                    .then(content => {
-                        document.querySelector('#content').innerHTML = content;
-                    });
-            } else {
-                // For other buttons, fetch content as before
-                fetch(target)
-                    .then(response => response.text())
-                    .then(result => {
-                        document.querySelector("#content").innerHTML = result;
-                    });
-            }
-        });
-    });
-})
+            let contentTarget;
 
-//update contents of the landing page based on which button is pressed
-document.addEventListener("DOMContentLoaded", function(){
-    document.querySelectorAll(".btn").forEach(function(button){
-        button.addEventListener("click", function(e){
-            e.preventDefault();
-            let target = this.getAttribute("data-target");
-            fetch(target)
+            // Check which button was clicked and set the appropriate content target
+            if (target === '/templates/userMembership.html') {
+                contentTarget = '/my-memberships-content';
+            } else if (target === '/templates/allPerks.html') {
+                contentTarget = '/my-perks-content';
+            } else {
+                contentTarget = target;
+            }
+
+            // Fetch updated content from the specified content target
+            fetch(contentTarget)
                 .then(response => response.text())
-                .then(result => {
-                    document.querySelector("#content").innerHTML = result;
+                .then(content => {
+                    document.querySelector('#content').innerHTML = content;
                 });
         });
     });
 });
+
 
 //have the home.html loaded by default
 document.addEventListener("DOMContentLoaded", function(){

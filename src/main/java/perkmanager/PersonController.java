@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PersonController {
@@ -135,4 +132,50 @@ public class PersonController {
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }
+
+    @GetMapping("/my-perks-content")
+    public String myPerksContent(Model model) {
+
+        // following code is for testing
+//        List<Perk> perks = new ArrayList<>();
+//
+//        Perk perk = new Perk();
+//
+//        perk.setPerkName("TEsting");
+//        perk.setPerkDescription("This is just a test");
+//        perk.setExpirationDate("2023-08-09");
+//
+//        Perk perk2 = new Perk();
+//
+//        perk2.setPerkName("TEsting2");
+//        perk2.setPerkDescription("This is just a test2");
+//        perk2.setExpirationDate("2023-08-10");
+//
+//        perkRepository.save(perk);
+//        perkRepository.save(perk2);
+//        perks.add(perk);
+//        perks.add(perk2);
+
+        //retrieve current logged in user perk list
+
+        model.addAttribute("perks", perks);
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+    }
+
+    @PostMapping("/vote/{count}/{id}")
+    @ResponseBody
+    public Perk votePerk(@PathVariable("count") int count, @PathVariable("id") Long perkId, @RequestBody Map<String, String> payload) {
+        String voteType = payload.get("voteType");
+        Perk perk = perkRepository.findById(perkId).orElseThrow(() -> new IllegalArgumentException("Invalid perk ID"));
+        if (voteType.equals("UPVOTE")) {
+            perk.upvote(count);
+        } else {
+            perk.downvote(count);
+        }
+        perkRepository.save(perk);
+        return perk;
+    }
+
+
 }
