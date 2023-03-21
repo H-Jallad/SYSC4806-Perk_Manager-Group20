@@ -56,7 +56,7 @@ public class PersonController {
     public String perksView(Model model){
         List<Membership> memberships = membershipRepository.findAll();
         model.addAttribute("memberships", memberships);
-        return "allPerks";
+        return "viewAllPerks";
     }
 
     @GetMapping("/membership")
@@ -121,17 +121,40 @@ public class PersonController {
 
     @GetMapping("/my-memberships-content")
     public String myMembershipsContent(Model model) {
-//        Person testPerson = new Person();
+        Person testPerson = new Person();
+        List<Membership> memberships = membershipRepository.findAll();
 //        List<Membership> memberships = new ArrayList<>();
-//        Membership membership = new Membership();
-//        membership.setName("CAA");
-//        membership.setImagePath("/img/memberships/CAA.png");
+//        Membership membership1 = new Membership();
+//        Membership membership2 = new Membership();
+//        Membership membership3 = new Membership();
+//        Membership membership4 = new Membership();
+//        membership1.setName("CAA");
+//        membership1.setImagePath("/img/memberships/CAA.png");
+//        membership2.setName("AMEX");
+//        membership2.setImagePath("/img/memberships/AMEX.png");
+//        membership3.setName("Air Miles");
+//        membership3.setImagePath("/img/memberships/Air-Miles.png");
+//        membership4.setName("Capital One");
+//        membership4.setImagePath("/img/memberships/Capital-One.png");
 //
-//        memberships.add(membership);
-//        testPerson.addMembership(membership);
-//        personRepository.save(testPerson);
+//        memberships.add(membership1);
+//        memberships.add(membership2);
+//        memberships.add(membership3);
+//        memberships.add(membership4);
+//        membershipRepository.save(membership1);
+//        membershipRepository.save(membership2);
+//        membershipRepository.save(membership3);
+//        membershipRepository.save(membership4);
+        //testPerson.addMembership(membership1);
+        //testPerson.addMembership(membership2);
+        //testPerson.addMembership(membership3);
+        //testPerson.addMembership(membership4);
+
+        model.addAttribute("memberships", memberships);
+        personRepository.save(testPerson);
+        //model.addAttribute("memberships", memberships);
         // add memberships data to model
-        model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
+        //model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }

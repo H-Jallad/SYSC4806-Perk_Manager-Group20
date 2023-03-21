@@ -7,15 +7,15 @@
     </select>
   </div>
   <div class="form-group">
-    <label for="perkName">Perk Name</label>
+    <label for="${perk.perkName}">Perk Name</label>
     <input type="text" class="form-control" id="perkName" name="perkName" required>
   </div>
   <div class="form-group">
-    <label for="perkDescription">Perk Description</label>
+    <label for= "${perk.perkDescription}">Perk Description</label>
     <input type="text" class="form-control" name="perkDescription" placeholder="Enter perk description">
   </div>
   <div class="form-group">
-    <label for="expirationDate">Perk Expiration Date</label>
+    <label for="${perk.expirationDate}">Perk Expiration Date</label>
     <input type="date" class="form-control" name="expirationDate" value="2023-03-10" min="2023-01-01" max="2099-12-31">
   </div>
   <button type="submit" class="btn btn-primary">Save</button>
