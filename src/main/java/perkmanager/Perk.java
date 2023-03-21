@@ -24,6 +24,9 @@ public class Perk {
 
     private int expirationDay;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Membership membership;
+
     public Perk() {
         useful = 0;
     }
@@ -44,15 +47,15 @@ public class Perk {
         return perkName;
     }
 
-    public void upvote() {
-        useful++;
+    public void upvote(int count) {
+        useful += count;
     }
 
-    public void downvote() {
-        useful--;
+    public void downvote(int count) {
+        useful -= count;
     }
 
-    public int getUsefulness() {
+    public int getUseful() {
         return useful;
     }
 
@@ -78,6 +81,18 @@ public class Perk {
 
     public int getExpirationDay() {
         return  expirationDay;
+    }
+
+    public Membership getMembership() {
+        return membership;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setMembership(Membership membership) {
+        this.membership = membership;
     }
 
     @Override
