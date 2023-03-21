@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(){
             if (target === '/templates/userMembership.html') {
                 contentTarget = '/my-memberships-content';
             } else if (target === '/templates/allPerks.html') {
-                contentTarget = '/my-perks-content';
+                contentTarget = '/all-perks-content';
             } else {
                 contentTarget = target;
             }

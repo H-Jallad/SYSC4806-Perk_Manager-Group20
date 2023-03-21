@@ -153,32 +153,10 @@ public class PersonController {
         return "userMembership :: content";
     }
 
-    @GetMapping("/my-perks-content")
-    public String myPerksContent(Model model) {
+    @GetMapping("/all-perks-content")
+    public String allPerksContent(Model model) {
 
-        // following code is for testing
-        List<Perk> perks = new ArrayList<>();
-
-        Perk perk = new Perk();
-
-        perk.setPerkName("TEsting");
-        perk.setPerkDescription("This is just a test");
-        perk.setExpirationDate("2023-08-09");
-
-        Perk perk2 = new Perk();
-
-        perk2.setPerkName("TEsting2");
-        perk2.setPerkDescription("This is just a test2");
-        perk2.setExpirationDate("2023-08-10");
-
-        perkRepository.save(perk);
-        perkRepository.save(perk2);
-        perks.add(perk);
-        perks.add(perk2);
-
-//        retrieve current logged in user perk list
-
-        model.addAttribute("perks", perks);
+        model.addAttribute("perks", perkRepository.findAll());
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
