@@ -12,11 +12,6 @@
 <div class="container-fluid p-5 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
     <form method="post" action="/signup">
         <h2>Sign Up</h2>
-        <!-- First Name input -->
-        <div class="form-outline mb-4">
-            <input type="text" id="form2Example1" class="form-control" name="name" required/>
-            <label class="form-label" for="form2Example1">First Name</label>
-        </div>
         <!-- Username input -->
         <div class="form-outline mb-4">
             <input type="text" id="form2Example2" class="form-control" name="username" required/>
@@ -35,6 +30,20 @@
         <div class="text-center">
             <p>Already a member? <a href="/login">Log in</a></p>
         </div>
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert" id="errorMessage">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <script>
+            setTimeout(function() {
+                var errorMessage = document.getElementById('errorMessage');
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+            }, 3000); // 5000 milliseconds = 5 seconds
+        </script>
+
+
     </form>
 </div>
 
