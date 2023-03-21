@@ -1,16 +1,18 @@
 package perkmanager;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class PersonController {
@@ -25,6 +27,7 @@ public class PersonController {
 
     @Autowired
     PerkRepository perkRepository;
+
 
     @RequestMapping("/users")
     public ResponseEntity<Iterable<Person>> getAllUsers() {
@@ -101,21 +104,26 @@ public class PersonController {
         return "viewAllPerks";
     }
 
-    @GetMapping("/perk-manager")
+    @GetMapping("/signup")
     public String addUser(Model model)
     {
-        Person newPerson = new Person();
-        model.addAttribute("newPerson", newPerson);
-        //personRepository.save(newPerson);
-        return "LandingPage";
+        return "signup";
     }
 
-    @PostMapping("/perk-manager/view")
+    @PostMapping("/signup")
     public String userSubmit(@ModelAttribute Person newPerson, Model model)
     {
         personRepository.save(newPerson);
         model.addAttribute("newPerson", newPerson);
-        return "result";
+        return "login";
+    }
+
+    @GetMapping("/LandingPage")
+    public String homePage(Authentication authentication, Model model) {
+        if(authentication!=null) {
+            String username = authentication.getName();
+        }
+        return "LandingPage";
     }
 
 
@@ -158,4 +166,33 @@ public class PersonController {
         // return view name for Thymeleaf fragment
         return "userMembership :: content";
     }
+
+    @GetMapping("/auth-status")
+    @ResponseBody
+    public Map<String, Object> getAuthStatus() {
+        boolean loggedIn;
+        String userName;
+        Map<String, Object> result = new HashMap<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth.getName()!="anonymousUser"){
+            loggedIn = auth.isAuthenticated();
+            userName = auth.getName();
+        } else {
+            loggedIn = false;
+            userName = "";
+        }
+        result.put("loggedIn", loggedIn);
+        result.put("userName", userName);
+        return result;
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "LandingPage";
+    }
+
 }
