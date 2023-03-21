@@ -44,8 +44,6 @@ public class Person {
     private String username;
     private String password;
 
-    private String name;
-
     /**
      * Constructor for class User.
      */

@@ -110,11 +110,21 @@ public class PersonController {
     }
 
     @PostMapping("/signup")
-    public String userSubmit(@ModelAttribute Person newPerson, Model model)
-    {
-        personRepository.save(newPerson);
-        model.addAttribute("newPerson", newPerson);
-        return "login";
+    public String userSubmit(@ModelAttribute Person newPerson, Model model) {
+        // check if a person with the same name already exists
+        Optional<Person> existingPerson = Optional.ofNullable(personRepository.findByUsername(newPerson.getUsername()));
+        if (existingPerson.isPresent()) {
+            // person with the same name already exists, add an error message to the model
+            String errorMessage = "A person with the same username already exists";
+            model.addAttribute("errorMessage", errorMessage);
+            // return to the signup page
+            return "signup";
+        } else {
+            // person with the same name does not exist, save the new person
+            personRepository.save(newPerson);
+            model.addAttribute("newPerson", newPerson);
+            return "login";
+        }
     }
 
     @GetMapping("/LandingPage")
