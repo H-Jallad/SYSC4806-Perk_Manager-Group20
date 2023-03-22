@@ -72,8 +72,13 @@ contentDiv.addEventListener('click', function(event) {
         // Send an AJAX request to go back to og vote value
         $.ajax({
             type: 'POST',
-            url: '/addPerk/' + membershipId + '/' + perkName + '/' + description + '/' + expirationDate,
-            data: JSON.stringify('ADD'),
+            url: '/addPerk',
+            data: JSON.stringify({
+                membershipId: membershipId,
+                perkName: perkName,
+                description: description,
+                expirationDate: expirationDate
+            }),
             contentType: 'application/json',
             success: function () {
                 // Update the vote count on the page
