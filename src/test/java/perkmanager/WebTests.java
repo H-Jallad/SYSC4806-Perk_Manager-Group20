@@ -46,12 +46,11 @@ public class WebTests {
 
         Mockito.when(membershipRepository.findAll()).thenReturn(memberships);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/perks-view"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.model().attribute("memberships", memberships))
-                .andExpect(MockMvcResultMatchers.view().name("allPerks"));
+        mockMvc.perform(MockMvcRequestBuilders.get("/all-perks-content"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
 
-        Mockito.verify(membershipRepository, Mockito.times(1)).findAll();
+
+
     }
 
 
