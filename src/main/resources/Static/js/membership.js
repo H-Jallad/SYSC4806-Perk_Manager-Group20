@@ -40,9 +40,7 @@ contentDiv.addEventListener('click', function(event) {
             });
     }
 
-        // Get the membershipId from the clicked button's id
-      const membershipSelect = document.querySelector('select[name="membership-name"]');
-    if (event.target.id.startsWith('add-membership')) {
+    else if (event.target.id.startsWith('add-membership')) {
         let selectedMembership = membershipSelect.options[membershipSelect.selectedIndex].value;
 
         // Send an AJAX request to go back to og vote value
@@ -62,7 +60,7 @@ contentDiv.addEventListener('click', function(event) {
         });
     }
 
-    if (event.target.id.startsWith('add-perk-button-')) {
+    else if (event.target.id.startsWith('add-perk-button-')) {
         event.preventDefault();
         let membershipId = event.target.id.split('-').pop();
         let membershipDropdown = document.getElementById("add-perk-dropdown-" + membershipId)

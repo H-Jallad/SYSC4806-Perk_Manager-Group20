@@ -75,6 +75,7 @@ public class PerksController {
         membership.addPerk(perk);
         perkRepository.save(perk);
         membershipRepository.save(membership);
+    }
 
     @GetMapping("/viewMembershipPerks/{id}")
     public String viewMembershipPerks(@PathVariable("id") Long membershipId, Model model) {
