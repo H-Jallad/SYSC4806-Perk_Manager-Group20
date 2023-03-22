@@ -81,7 +81,7 @@ public class Person {
         }
     }
 
-    public void removeMembership(Optional<Membership> membership) {
+    public void removeMembership(Membership membership) {
         if (membership != null) {
             membershipList.remove(membership);
         }

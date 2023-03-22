@@ -202,10 +202,10 @@ public class PersonController {
     @ResponseBody
     public void removeMembership(@PathVariable("id") Long membershipId) {
        Person person = personRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-       Optional<Membership> membership = membershipRepository.findById(membershipId);
+       Membership membership = membershipService.findById(membershipId);
        person.removeMembership(membership);
        personRepository.save(person);
-       membershipService.deleteById(membershipId);
+       //membershipService.deleteById(membershipId);
     }
 
     @PostMapping("/addMembership/{id}")
