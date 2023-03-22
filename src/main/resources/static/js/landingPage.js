@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }else {
                 // If the user is not logged in, hide the "My Membership" button
                 document.querySelector("button[data-target='/templates/userMembership.html']").style.display = "none";
+                document.querySelector("#my-perks").style.display = "none";
                 document.querySelector("button[data-target='/templates/login.html']").addEventListener("click", function() {
                     window.location.href = "/login";});
             }
