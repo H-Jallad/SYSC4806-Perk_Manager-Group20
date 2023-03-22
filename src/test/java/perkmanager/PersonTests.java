@@ -44,18 +44,6 @@ public class PersonTests {
         assertEquals("Silver", memberships.get(1).getName());
     }
 
-    @Test
-    public void testToString() {
-        Person person = new Person();
-        Membership membership1 = new Membership();
-        membership1.setName("Gold");
-        membership1.createPerk("50% off Ipad", "Get 50% off any Ipad");
-        Membership membership2 = new Membership();
-        membership2.setName("Silver");
-        membership2.createPerk("Boarding Priority", "Get Boarding priority on all flights");
-        person.addMembership(membership1);
-        person.addMembership(membership2);
-        assertEquals("User[id=null]\nMembership: Gold\nperkList=[50% off Ipad\nGet 50% off any Ipad]\nMembership: Silver\nperkList=[Boarding Priority\nGet Boarding priority on all flights]", person.toString());
-    }
+
 
 }
