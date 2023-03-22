@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -77,6 +78,12 @@ public class Person {
             if (!membershipList.contains(membership)) {
                 membershipList.add(membership);
             }
+        }
+    }
+
+    public void removeMembership(Optional<Membership> membership) {
+        if (membership != null) {
+            membershipList.remove(membership);
         }
     }
 

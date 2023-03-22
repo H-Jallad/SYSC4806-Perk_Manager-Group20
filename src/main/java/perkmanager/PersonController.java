@@ -139,8 +139,19 @@ public class PersonController {
         personRepository.save(testPerson);
         // add memberships data to model
         model.addAttribute("memberships", personRepository.findById(1L).getMembershipList());
+        //SecurityContextHolder.getContext().getAuthentication().getName()
         // return view name for Thymeleaf fragment
+
         return "userMembership :: content";
+    }
+
+    @GetMapping("/myMemberships-content")
+    public String allMyMembershipsContent(Model model) {
+        List<Membership> memberships = personRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).getMembershipList();
+        List<Membership> allMemberships = membershipRepository.findAll();
+        model.addAttribute("memberships", memberships);
+        model.addAttribute("allMemberships", allMemberships);
+        return "allMemberships :: content";
     }
 
     @GetMapping("/my-perks-content")
@@ -187,7 +198,24 @@ public class PersonController {
         return perk;
     }
 
+    @PostMapping("/removeMembership/{id}")
+    @ResponseBody
+    public void removeMembership(@PathVariable("id") Long membershipId) {
+       Person person = personRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+       Optional<Membership> membership = membershipRepository.findById(membershipId);
+       person.removeMembership(membership);
+       personRepository.save(person);
+       membershipService.deleteById(membershipId);
+    }
 
+    @PostMapping("/addMembership/{id}")
+    @ResponseBody
+    public void addMembership(@PathVariable("id") Long membershipId) {
+        Person person = personRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        Optional<Membership> membership = membershipRepository.findById(membershipId);
+        person.addMembership(membership.get());
+        personRepository.save(person);
+    }
 
     @GetMapping("/auth-status")
     @ResponseBody
