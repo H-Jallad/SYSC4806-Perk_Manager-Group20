@@ -12,13 +12,21 @@
   
   <div th:fragment="content" class="container py-3">
 
-    <h1 class="mb-3">My Perks</h1>
+    <h1 class="mb-3">Perks</h1>
     <!--if there are no perks, this will not be displayed-->
     <div th:if="${perks != null and not #lists.isEmpty(perks)}">
       
       <div th:each="perk : ${perks}" class="row border-3 py-3">
         <div id="perk-content" th:replace="perk :: perk-content">
         </div>
+      </div>
+
+    </div>
+
+    <div th:if="${perks == null or #lists.isEmpty(perks)}">
+
+      <div class="row border-3 py-3">
+        <h3 class="mb-3">No Perks Available</h3>
       </div>
 
     </div>

@@ -31,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }else {
                 // If the user is not logged in, hide the "My Membership" button
                 document.querySelector("button[data-target='/templates/allMemberships.html']").style.display = "none";
+                document.querySelector("#my-perks").style.display = "none";
                 document.querySelector("button[data-target='/templates/login.html']").addEventListener("click", function() {
                     window.location.href = "/login";});
             }
@@ -48,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function(){
             if (target === '/templates/allMemberships.html') {
                 contentTarget = '/myMemberships-content';
             } else if (target === '/templates/allPerks.html') {
+                contentTarget = '/all-perks-content';
+            } else if (this.innerHTML == 'My Perks'){
                 contentTarget = '/my-perks-content';
             } else {
                 contentTarget = target;
