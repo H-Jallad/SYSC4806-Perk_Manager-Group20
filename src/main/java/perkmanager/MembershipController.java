@@ -52,8 +52,8 @@ public class MembershipController {
     @ResponseBody
     public void addMembership(@PathVariable("id") Long membershipId) {
         Person person = personRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        Optional<Membership> membership = membershipRepository.findById(membershipId);
-        person.addMembership(membership.get());
+        Membership membership = membershipService.findById(membershipId);
+        person.addMembership(membership);
         personRepository.save(person);
     }
 

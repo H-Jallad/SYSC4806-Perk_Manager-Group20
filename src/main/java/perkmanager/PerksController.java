@@ -63,6 +63,20 @@ public class PerksController {
         return perk;
     }
 
+    @PostMapping("/addPerk/{id}/{name}/{description}/{expirationDate}")
+    @ResponseBody
+    public void addPerk(@PathVariable("id") Long membershipId, @PathVariable("name") String perkName, @PathVariable("description") String perkDescription, @PathVariable("expirationDate") String expirationDate) {
+        Membership membership = membershipService.findById(membershipId);
+        Perk perk = new Perk();
+        perk.setPerkName(perkName);
+        perk.setPerkDescription(perkDescription);
+        perk.setExpirationDate(expirationDate);
+        perk.setMembership(membership);
+        membership.addPerk(perk);
+        perkRepository.save(perk);
+        membershipRepository.save(membership);
+    }
+
     @GetMapping("/viewMembershipPerks/{id}")
     public String viewMembershipPerks(@PathVariable("id") Long membershipId, Model model) {
         model.addAttribute("perks", membershipRepository.findById(membershipId).get().getPerkList());
