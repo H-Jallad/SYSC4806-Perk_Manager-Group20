@@ -3,6 +3,10 @@
 
 // Attach a click event listener to the #content div
 contentDiv.addEventListener('click', function(event) {
+
+    // Get the membershipId from the clicked button's id
+    const membershipSelect = document.querySelector('select[name="membership-name"]');
+
     // Check if the clicked element is the #upvote-button or #downvote-button
     if (event.target.id.startsWith('remove-membership-')) {
         // Get the membershipId from the clicked button's id
@@ -25,9 +29,19 @@ contentDiv.addEventListener('click', function(event) {
         });
     }
 
-    // Get the membershipId from the clicked button's id
-    const membershipSelect = document.querySelector('select[name="membership-name"]');
+    else if (event.target.id.startsWith('view-perks-')) {
+        // Get the membershipId from the clicked button's id
+        let membershipId = event.target.id.split('-').pop();
 
+        fetch(`/viewMembershipPerks/${membershipId}`)
+            .then(response => response.text())
+            .then(content => {
+                document.querySelector('#content').innerHTML = content;
+            });
+    }
+
+        // Get the membershipId from the clicked button's id
+      const membershipSelect = document.querySelector('select[name="membership-name"]');
     if (event.target.id.startsWith('add-membership')) {
         let selectedMembership = membershipSelect.options[membershipSelect.selectedIndex].value;
 
