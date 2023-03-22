@@ -161,6 +161,18 @@ public class PersonController {
         return "allPerks :: content";
     }
 
+    @GetMapping("/my-perks-content")
+    public String myPerksContent(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<Perk> perks = new ArrayList<>();
+        for(Membership membership : personRepository.findByUsername(auth.getName()).getMembershipList()){
+            perks.addAll(membership.getPerkList());
+        }
+        model.addAttribute("perks", perks);
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+    }
+
     @PostMapping("/vote/{count}/{id}")
     @ResponseBody
     public Perk votePerk(@PathVariable("count") int count, @PathVariable("id") Long perkId, @RequestBody Map<String, String> payload) {

@@ -49,6 +49,8 @@ document.addEventListener("DOMContentLoaded", function(){
                 contentTarget = '/my-memberships-content';
             } else if (target === '/templates/allPerks.html') {
                 contentTarget = '/all-perks-content';
+            } else if (this.innerHTML == 'My Perks'){
+                contentTarget = '/my-perks-content';
             } else {
                 contentTarget = target;
             }
