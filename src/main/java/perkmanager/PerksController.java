@@ -29,71 +29,37 @@ public class PerksController {
     @Autowired
     PerkRepository perkRepository;
 
-    @GetMapping("/addPerk")
-    public String showPerkForm(Model model){
-        model.addAttribute("membershipType",Arrays.asList("CAA", "AMEX"));
-        model.addAttribute("perk", new Perk());
-        return "perk";
-    }
+    @GetMapping("/all-perks-content")
+    public String allPerksContent(Model model) {
 
-
-    @PostMapping("/addPerk")
-    public String addPerk(@ModelAttribute Membership membership, @ModelAttribute Perk perk, Model model) {
-        Membership existingMembership = membershipRepository.findByName(membership.getName());
-        if(existingMembership != null){
-            if (!existingMembership.getPerkList().contains(perk)){
-                existingMembership.addPerk(perk);
-                perkRepository.save(perk);
-                membershipRepository.save(existingMembership);
-                model.addAttribute("perk", perk);
-                model.addAttribute(("membership"),existingMembership);
-            }
-        }
-        return "listOfPerks";
-    }
-    @GetMapping("/perks-view")
-    public String perksView(Model model){
-        List<Membership> memberships = membershipRepository.findAll();
-        model.addAttribute("memberships", memberships);
-        return "allPerks";
-    }
-
-    @GetMapping("/all-perks-view")
-    public String allPerksView(Model model) {
-        List<Perk> perks = perkRepository.findAll();
-        List<Perk> sortedPerks = membershipService.sortPerks(perks);
-        model.addAttribute("perks", sortedPerks);
-
-        return "viewAllPerks";
+        model.addAttribute("perks", perkRepository.findAll());
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
     }
 
     @GetMapping("/my-perks-content")
     public String myPerksContent(Model model) {
-
-        // following code is for testing
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Perk> perks = new ArrayList<>();
-
-        Perk perk = new Perk();
-
-        perk.setPerkName("TEsting");
-        perk.setPerkDescription("This is just a test");
-        perk.setExpirationDate("2023-08-09");
-
-        Perk perk2 = new Perk();
-
-        perk2.setPerkName("TEsting2");
-        perk2.setPerkDescription("This is just a test2");
-        perk2.setExpirationDate("2023-08-10");
-
-        perkRepository.save(perk);
-        perkRepository.save(perk2);
-        perks.add(perk);
-        perks.add(perk2);
-
-//        retrieve current logged in user perk list
-
+        for(Membership membership : personRepository.findByUsername(auth.getName()).getMembershipList()){
+            perks.addAll(membership.getPerkList());
+        }
         model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
+    }
+
+    @PostMapping("/vote/{count}/{id}")
+    @ResponseBody
+    public Perk votePerk(@PathVariable("count") int count, @PathVariable("id") Long perkId, @RequestBody Map<String, String> payload) {
+        String voteType = payload.get("voteType");
+        Perk perk = perkRepository.findById(perkId).orElseThrow(() -> new IllegalArgumentException("Invalid perk ID"));
+        if (voteType.equals("UPVOTE")) {
+            perk.upvote(count);
+        } else {
+            perk.downvote(count);
+        }
+        perkRepository.save(perk);
+        return perk;
     }
 }

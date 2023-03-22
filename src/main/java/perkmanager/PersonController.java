@@ -35,9 +35,6 @@ public class PersonController {
     }
 
 
-
-
-
     @GetMapping("/signup")
     public String addUser(Model model)
     {
@@ -69,10 +66,6 @@ public class PersonController {
         }
         return "LandingPage";
     }
-
-
-
-
 
     @GetMapping("/auth-status")
     @ResponseBody
