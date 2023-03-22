@@ -62,4 +62,11 @@ public class PerksController {
         perkRepository.save(perk);
         return perk;
     }
+
+    @GetMapping("/viewMembershipPerks/{id}")
+    public String viewMembershipPerks(@PathVariable("id") Long membershipId, Model model) {
+        model.addAttribute("perks", membershipRepository.findById(membershipId).get().getPerkList());
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+    }
 }

@@ -3,6 +3,10 @@
 
 // Attach a click event listener to the #content div
 contentDiv.addEventListener('click', function(event) {
+
+    // Get the membershipId from the clicked button's id
+    const membershipSelect = document.querySelector('select[name="membership-name"]');
+
     // Check if the clicked element is the #upvote-button or #downvote-button
     if (event.target.id.startsWith('remove-membership-')) {
         // Get the membershipId from the clicked button's id
@@ -25,11 +29,18 @@ contentDiv.addEventListener('click', function(event) {
         });
     }
 
+    else if (event.target.id.startsWith('view-perks-')) {
+        // Get the membershipId from the clicked button's id
+        let membershipId = event.target.id.split('-').pop();
 
-    // Get the membershipId from the clicked button's id
-    const membershipSelect = document.querySelector('select[name="membership-name"]');
+        fetch(`/viewMembershipPerks/${membershipId}`)
+            .then(response => response.text())
+            .then(content => {
+                document.querySelector('#content').innerHTML = content;
+            });
+    }
 
-    if (event.target.id.startsWith('add-membership')) {
+    else if (event.target.id.startsWith('add-membership')) {
         let selectedMembership = membershipSelect.options[membershipSelect.selectedIndex].value;
 
         // Send an AJAX request to go back to og vote value
