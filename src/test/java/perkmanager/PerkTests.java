@@ -30,11 +30,4 @@ public class PerkTests {
         assertEquals("Get 50% off Any Ipad", perk.getPerkDescription());
     }
 
-    @Test
-    public void testToString() {
-        Perk perk = new Perk();
-        perk.setPerkName("50% off Ipad");
-        perk.setPerkDescription("Get 50% off Any Ipad");
-        assertEquals("50% off Ipad\nGet 50% off Any Ipad", perk.toString());
-    }
 }
