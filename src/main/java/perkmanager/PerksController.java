@@ -63,9 +63,14 @@ public class PerksController {
         return perk;
     }
 
-    @PostMapping("/addPerk/{id}/{name}/{description}/{expirationDate}")
+    @PostMapping("/addPerk")
     @ResponseBody
-    public void addPerk(@PathVariable("id") Long membershipId, @PathVariable("name") String perkName, @PathVariable("description") String perkDescription, @PathVariable("expirationDate") String expirationDate) {
+    public void addPerk(@RequestBody Map<String, String> payload) {
+        Long membershipId = Long.parseLong(payload.get("membershipId"));
+        String perkName = payload.get("perkName");
+        String perkDescription = payload.get("description");
+        String expirationDate = payload.get("expirationDate");
+
         Membership membership = membershipService.findById(membershipId);
         Perk perk = new Perk();
         perk.setPerkName(perkName);
