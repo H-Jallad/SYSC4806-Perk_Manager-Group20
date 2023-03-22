@@ -14,7 +14,7 @@ contentDiv.addEventListener('click', function(event) {
             url: '/removeMembership/' + membershipId,
             data: JSON.stringify('REMOVE'),
             contentType: 'application/json',
-            success: function() {
+            success: function () {
                 // Update the vote count on the page
                 fetch('/myMemberships-content')
                     .then(response => response.text())
@@ -24,7 +24,6 @@ contentDiv.addEventListener('click', function(event) {
             }
         });
     }
-
 
     // Get the membershipId from the clicked button's id
     const membershipSelect = document.querySelector('select[name="membership-name"]');
@@ -48,5 +47,37 @@ contentDiv.addEventListener('click', function(event) {
             }
         });
     }
+
+    if (event.target.id.startsWith('add-perk-button-')) {
+        event.preventDefault();
+        let membershipId = event.target.id.split('-').pop();
+        let membershipDropdown = document.getElementById("add-perk-dropdown-" + membershipId)
+        let perkName = membershipDropdown.querySelector('#perk-name').value; //  getElementById("perk-name").value;
+        let description = membershipDropdown.querySelector('#perk-description').value;
+        let expirationDate = membershipDropdown.querySelector('#perk-expiration-date').value;
+
+
+        // Send an AJAX request to go back to og vote value
+        $.ajax({
+            type: 'POST',
+            url: '/addPerk/' + membershipId + '/' + perkName + '/' + description + '/' + expirationDate,
+            data: JSON.stringify('ADD'),
+            contentType: 'application/json',
+            success: function () {
+                // Update the vote count on the page
+                fetch('/myMemberships-content')
+                    .then(response => response.text())
+                    .then(content => {
+                        document.querySelector('#content').innerHTML = content;
+                    });
+            }
+        });
+    }
 });
+
+
+
+
+
+
 

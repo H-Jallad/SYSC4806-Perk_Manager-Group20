@@ -26,7 +26,28 @@
         </div>
 
         <div class="col-15 col-md-2 d-flex align-items-center">
-            <button type="button" class="btn btn-primary btn-sm" th:id="'add-perk-' + ${membership.id}">Add Perk</button>
+            <div class="dropdown" th:id="'add-perk-dropdown-' + ${membership.id}">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="add-perk-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Add Perk
+                </button>
+                <ul class="dropdown-menu p-4 text-muted" style="max-width: 200px;">
+                    <form>
+                        <div class="mb-3">
+                            <label for="perk-name" class="form-label">Perk Name</label>
+                            <input type="text" class="form-control" id="perk-name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="perk-description" class="form-label">Perk Description</label>
+                            <input type="text" class="form-control" id="perk-description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="perk-expiration-date" class="form-label">Perk Expiration Date</label>
+                            <input type="date" class="form-control" id="perk-expiration-date" min = "{{ date | date('Y-m-d') }}" max = "2099-12-31" value="{{ date | date('Y-m-d') }}">
+                        </div>
+                        <button th:id="'add-perk-button-' + ${membership.id}" class="btn btn-primary mb-2">Save</button><br />
+                    </form>
+                </ul>
+            </div>
         </div>
 
         <div class="col-15 col-md-2 d-flex align-items-center">
