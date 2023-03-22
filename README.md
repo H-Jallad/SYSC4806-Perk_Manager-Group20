@@ -22,5 +22,4 @@ The team will worktowards adding limitations to perks in geographical location a
 ![uml](https://user-images.githubusercontent.com/72241380/223627105-8fd72df6-2367-4162-a6c3-8f22751c9d84.png)
 
 ## Database Schema
-
-![er drawio](https://user-images.githubusercontent.com/72241380/223627178-7162d135-ddb2-4ab9-a528-7184609fe073.png)
+![database-schema](https://user-images.githubusercontent.com/72241380/226965673-2368e538-0415-4823-83c5-f8d0fce1d993.png)
