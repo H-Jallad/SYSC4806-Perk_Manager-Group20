@@ -17,9 +17,9 @@ This program now has a login functionality that can allow a user to either login
 
 The team will worktowards adding limitations to perks in geographical location and time. They will also expand the perks to have an associated product as well. The team will then add a perk searching functionality which will either list results by decreasing amount of votes or by expiry date. They will also enable perks to be removed from the system if they are expired.
 
-## UML Class diagram
+# UML Class diagram
 
-![uml](https://user-images.githubusercontent.com/72241380/223627105-8fd72df6-2367-4162-a6c3-8f22751c9d84.png)
+#![uml-class](https://user-images.githubusercontent.com/72241380/226972074-a8169d71-dece-425b-b3ab-1da97983e6d4.png)
 
 ## Database Schema
 ![database-schema](https://user-images.githubusercontent.com/72241380/226965673-2368e538-0415-4823-83c5-f8d0fce1d993.png)
