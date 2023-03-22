@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Membership</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+<div th:fragment="content" class="container py-3">
+
+    <h1 class="mb-3">My Memberships</h1>
+    <!--if there are no memberships, this will not be displayed-->
+    <div th:if="${memberships != null and not #lists.isEmpty(memberships)}">
+
+        <div th:each="membership : ${memberships}" class="row border-3 py-3">
+            <div id="membership-content" th:replace="membership :: membership-content">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col py-3 d-flex justify-content-center">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="addMembershipDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                + Add Membership
+            </button>
+            <ul class="dropdown-menu p-3" aria-labelledby="addMembershipDropdown">
+
+
+
+                    <div class="form-group mb-2">
+                        <label for="name">Membership Type</label>
+                        <select class="form-control" name="membership-name">
+                            <option th:each="eachMembership : ${allMemberships}" th:value="${eachMembership.id}" th:text="${eachMembership.name}"></option>
+                        </select>
+                    </div>
+
+                    <button id="add-membership" class="btn btn-primary mb-2">Save</button><br />
+
+
+
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+</body>
