@@ -31,8 +31,8 @@ public class PerksController {
 
     @GetMapping("/all-perks-content")
     public String allPerksContent(Model model) {
-
-        model.addAttribute("perks", perkRepository.findAll());
+        List<Perk> perks = membershipService.sortPerksByExpirationDate(perkRepository.findAll());
+        model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
