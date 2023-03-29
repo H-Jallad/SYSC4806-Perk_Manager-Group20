@@ -80,7 +80,7 @@ public class MembershipService {
         membershipRepository.deleteById(id);
     }
 
-    public List<Perk> sortPerks(List<Perk> perks) {
+    public List<Perk> sortPerksByExpirationDate(List<Perk> perks) {
         int length = perks.size();
         //Bubble sort algorithm
         for (int i = 0; i < length - 1; i++) {

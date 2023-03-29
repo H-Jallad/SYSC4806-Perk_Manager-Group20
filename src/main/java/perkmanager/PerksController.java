@@ -31,8 +31,8 @@ public class PerksController {
 
     @GetMapping("/all-perks-content")
     public String allPerksContent(Model model) {
-
-        model.addAttribute("perks", perkRepository.findAll());
+        List<Perk> perks = membershipService.sortPerksByExpirationDate(perkRepository.findAll());
+        model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
@@ -44,7 +44,8 @@ public class PerksController {
         for(Membership membership : personRepository.findByUsername(auth.getName()).getMembershipList()){
             perks.addAll(membership.getPerkList());
         }
-        model.addAttribute("perks", perks);
+        List<Perk> sortedPerks = membershipService.sortPerksByExpirationDate(perks);
+        model.addAttribute("perks", sortedPerks);
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
@@ -84,7 +85,8 @@ public class PerksController {
 
     @GetMapping("/viewMembershipPerks/{id}")
     public String viewMembershipPerks(@PathVariable("id") Long membershipId, Model model) {
-        model.addAttribute("perks", membershipRepository.findById(membershipId).get().getPerkList());
+        List<Perk> perks = membershipService.sortPerksByExpirationDate(membershipRepository.findById(membershipId).get().getPerkList());
+        model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
