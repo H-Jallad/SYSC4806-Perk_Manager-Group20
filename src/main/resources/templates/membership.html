@@ -44,6 +44,14 @@
                             <label for="perk-expiration-date" class="form-label">Perk Expiration Date</label>
                             <input type="date" class="form-control" id="perk-expiration-date" min = "{{ date | date('Y-m-d') }}" max = "2099-12-31" value="{{ date | date('Y-m-d') }}">
                         </div>
+                        <div class="mb-3">
+                            <label for="perk-country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="perk-country"></input>
+                            <label for="perk-provinceOrState"  class="form-label">Province/State</label>
+                            <input type="text" class="form-control" id="perk-provinceOrState"></input>
+                            <label for="perk-city"  class="form-label">City</label>
+                            <input type="text" class="form-control" id="perk-city"></input>
+                        </div>
                         <button th:id="'add-perk-button-' + ${membership.id}" class="btn btn-primary mb-2">Save</button><br />
                     </form>
                 </ul>
