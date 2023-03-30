@@ -87,9 +87,7 @@ public class MembershipService {
             for (int j = 0; j < length - 1 - i; j++) {
                 if (comparePerkExpirationDate(perks.get(j), perks.get(j + 1))) {
                     Perk tempPerk = perks.get(j);
-                    //perks.remove(j);
                     perks.set(j, perks.get(j + 1));
-                    //perks.remove(j + 1);
                     perks.set(j + 1, tempPerk);
                 }
             }
@@ -112,5 +110,20 @@ public class MembershipService {
             }
         }
         return false;
+    }
+
+    public List<Perk> sortPerksByUsefulness(List<Perk> perks) {
+        int length = perks.size();
+        //Bubble sort algorithm
+        for (int i = 0; i < length - 1; i++) {
+            for (int j = 0; j < length - 1 - i; j++) {
+                if (perks.get(j).getUseful() < perks.get(j + 1).getUseful()) {
+                    Perk tempPerk = perks.get(j);
+                    perks.set(j, perks.get(j + 1));
+                    perks.set(j + 1, tempPerk);
+                }
+            }
+        }
+        return perks;
     }
 }
