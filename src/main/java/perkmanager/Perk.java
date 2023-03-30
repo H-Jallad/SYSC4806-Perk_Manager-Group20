@@ -12,6 +12,8 @@ public class Perk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String locations;
+
     private String perkDescription;
     private String perkName;
 
@@ -19,6 +21,9 @@ public class Perk {
 
     private String expirationDate;
 
+
+
+    private String times;
     private int expirationYear;
 
     private int expirationMonth;
@@ -97,6 +102,20 @@ public class Perk {
         this.membership = membership;
     }
 
+    public String getLocations() {
+        return locations;
+    }
+
+    public void setLocations(String locations) {
+        this.locations = locations;
+    }
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
