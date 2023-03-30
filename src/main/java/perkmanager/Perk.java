@@ -12,11 +12,7 @@ public class Perk {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-
-
-    private String country;
-    private String provinceOrState;
-    private String city;
+    private String locations;
 
     private String perkDescription;
     private String perkName;
@@ -25,6 +21,9 @@ public class Perk {
 
     private String expirationDate;
 
+
+
+    private String times;
     private int expirationYear;
 
     private int expirationMonth;
@@ -102,28 +101,20 @@ public class Perk {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
-    public String getCountry() {
-        return country;
+
+    public String getLocations() {
+        return locations;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setLocations(String locations) {
+        this.locations = locations;
+    }
+    public String getTimes() {
+        return times;
     }
 
-    public String getProvinceOrState() {
-        return provinceOrState;
-    }
-
-    public void setProvinceOrState(String provinceOrState) {
-        this.provinceOrState = provinceOrState;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setTimes(String times) {
+        this.times = times;
     }
     @Override
     public String toString() {
