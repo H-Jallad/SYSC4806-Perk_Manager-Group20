@@ -13,6 +13,12 @@
   <div th:fragment="content" class="container py-3">
 
     <h1 class="mb-3">Perks</h1>
+
+    <div class="d-flex justify-content-end">
+      <input type="text" id="search-perk-name" placeholder="Search for perks by name">
+      <button type="submit" id="search-perks">Search</button>
+    </div>
+
     <!--if there are no perks, this will not be displayed-->
     <div th:if="${perks != null and not #lists.isEmpty(perks)}">
       
