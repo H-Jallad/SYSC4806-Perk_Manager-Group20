@@ -98,10 +98,12 @@ public class PerksController {
 
     @GetMapping("/searchPerk/name/{perkName}")
     public String viewMembershipPerks(@PathVariable("perkName") String perkName, Model model) {
+        List<Perk> allPerks = membershipService.findAllPerks();
         List<Perk> perks = new ArrayList<>();
-        Perk perk = membershipService.findByPerkName(perkName);
-        if (perk != null) {
-            perks.add(perk);
+        for (Perk perk : allPerks) {
+            if (perk.getPerkName().contains(perkName)) {
+                perks.add(perk);
+            }
         }
         model.addAttribute("perks", perks);
         // return view name for Thymeleaf fragment
