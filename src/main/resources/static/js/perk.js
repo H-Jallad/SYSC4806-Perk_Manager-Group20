@@ -70,4 +70,13 @@ contentDiv.addEventListener('click', function(event) {
 
         }
     }
+    else if (event.target.id.startsWith('search-perks')) {
+        let perkName = document.getElementById('search-perk-name').value;
+
+        fetch(`/searchPerk/name/${perkName}`)
+            .then(response => response.text())
+            .then(content => {
+                document.querySelector('#content').innerHTML = content;
+            });
+    }
 });
