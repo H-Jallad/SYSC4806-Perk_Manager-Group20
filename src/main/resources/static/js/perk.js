@@ -72,8 +72,25 @@ contentDiv.addEventListener('click', function(event) {
     }
     else if (event.target.id.startsWith('search-perks')) {
         let perkName = document.getElementById('search-perk-name').value;
+        if(perkName) {
+            fetch(`/searchPerk/name/${perkName}`)
+                .then(response => response.text())
+                .then(content => {
+                    document.querySelector('#content').innerHTML = content;
+                });
+        }
+    }
 
-        fetch(`/searchPerk/name/${perkName}`)
+    else if (event.target.id.startsWith('sort-usefulness')) {
+        fetch("/sortPerk/usefulness")
+            .then(response => response.text())
+            .then(content => {
+                document.querySelector('#content').innerHTML = content;
+            });
+    }
+
+    else if (event.target.id.startsWith('sort-expiry-date')) {
+        fetch("/sortPerk/expiryDate")
             .then(response => response.text())
             .then(content => {
                 document.querySelector('#content').innerHTML = content;

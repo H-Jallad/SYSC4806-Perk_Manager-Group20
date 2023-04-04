@@ -67,6 +67,8 @@ contentDiv.addEventListener('click', function(event) {
         let perkName = membershipDropdown.querySelector('#perk-name').value; //  getElementById("perk-name").value;
         let description = membershipDropdown.querySelector('#perk-description').value;
         let expirationDate = membershipDropdown.querySelector('#perk-expiration-date').value;
+        let perkLocations = membershipDropdown.querySelector('#perk-locations').value;
+        let perkTimes = membershipDropdown.querySelector('#perk-times').value;
 
 
         // Send an AJAX request to go back to og vote value
@@ -77,7 +79,9 @@ contentDiv.addEventListener('click', function(event) {
                 membershipId: membershipId,
                 perkName: perkName,
                 description: description,
-                expirationDate: expirationDate
+                expirationDate: expirationDate,
+                perkLocations: perkLocations,
+                perkTimes: perkTimes
             }),
             contentType: 'application/json',
             success: function () {

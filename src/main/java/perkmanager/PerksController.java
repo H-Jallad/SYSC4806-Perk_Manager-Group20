@@ -109,4 +109,24 @@ public class PerksController {
         // return view name for Thymeleaf fragment
         return "allPerks :: content";
     }
+
+    @GetMapping("/sortPerk/usefulness")
+    public String sortPerksByUsefulness(Model model) {
+        List<Perk> allPerks = membershipService.findAllPerks();
+        List<Perk> perks = membershipService.sortPerksByUsefulness(allPerks);
+        model.addAttribute("perks", perks);
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+
+    }
+
+    @GetMapping("/sortPerk/expiryDate")
+    public String sortPerksByExpiryDate(Model model) {
+        List<Perk> allPerks = membershipService.findAllPerks();
+        List<Perk> perks = membershipService.sortPerksByExpirationDate(allPerks);
+        model.addAttribute("perks", perks);
+        // return view name for Thymeleaf fragment
+        return "allPerks :: content";
+
+    }
 }
