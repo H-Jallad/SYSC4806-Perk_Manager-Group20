@@ -67,7 +67,7 @@ public class LogInAndSignUpTests {
 
     @Test
     @WithMockUser
-    public void testUnsuccessfulLoginUsernamePassword() throws Exception {
+    public void testUnsuccessfulLoginPassword() throws Exception {
         mockMvc.perform(post("/login")
                         .param("username", "mutaz")
                         .param("password", "invalidPassword"))
