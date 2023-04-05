@@ -55,6 +55,26 @@ public class LogInAndSignUpTests {
                 .andExpect(redirectedUrl("/login?error"));
     }
 
+    @Test
+    @WithMockUser
+    public void testUnsuccessfulLoginUsername() throws Exception {
+        mockMvc.perform(post("/login")
+                        .param("username", "invalidUser")
+                        .param("password", "mutaz"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login?error"));
+    }
+
+    @Test
+    @WithMockUser
+    public void testUnsuccessfulLoginUsernamePassword() throws Exception {
+        mockMvc.perform(post("/login")
+                        .param("username", "mutaz")
+                        .param("password", "invalidPassword"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login?error"));
+    }
+
 
 
     @Test
