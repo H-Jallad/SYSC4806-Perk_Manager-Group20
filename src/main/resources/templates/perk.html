@@ -11,29 +11,32 @@
 <body>
   
   <div th:fragment="perk-content" class="container py-3">
-    <div class="row border-bottom border-3 py-3">
-      <div class="col-15 col-md-2 d-flex align-items-center">
+    <div class="row border-bottom border-1 py-3">
+      <div class="col-18 col-md-2 d-flex align-items-center">
         <h2 th:text="${perk.perkName}"></h2>
       </div>
-      <div class="col-15 col-md-2 d-flex align-items-center">
+      <div class="col-18 col-md-2 d-flex align-items-center">
           <p th:text="${perk.perkDescription}"></p>
       </div>
-      <div class="col-15 col-md-2 d-flex align-items-center flex-column">
+      <div class="col-18 col-md-2 d-flex align-items-center flex-column">
         <p>Expiration:</p>
         <p th:text="${perk.expirationDate}"></p>
       </div>
-      <div class="col-15 col-md-2 d-flex align-items-center justify-content-between">
+      <div class="col-18 col-md-2 d-flex align-items-center justify-content-between">
           <button th:id="'upvote-button-' + ${perk.id}" class="btn btn-outline-primary">👍</button>
         <span th:text="${perk.useful}" th:id="'vote-count-' + ${perk.id}" style="margin: 0 2px;"></span>
           <button th:id="'downvote-button-' + ${perk.id}" class="btn btn-outline-primary">👎</button>
       </div>
-      <div class="col-15 col-md-2 d-flex align-items-center flex-column">
+      <div class="col-18 col-md-2 d-flex align-items-center flex-column">
         <p>Membership:</p>
         <p th:text="${perk.membership.name}"></p>
       </div>
-      <div class="col-15 col-md-2 d-flex align-items-center flex-column">
+      <div class="col-18 col-md-2 d-flex align-items-center flex-column">
         <p>Locations: <span th:text="${perk.locations}"></span></p>
         <p>Times: <span th:text="${perk.times}"></span></p>
+      </div>
+      <div class="col-18 col-md-2 d-flex align-items-center align-items-center">
+        <p>Product: <span th:text="${perk.product}"></span></p>
       </div>
     </div>
   </div>

@@ -74,6 +74,7 @@ public class PerksController {
         String expirationDate = payload.get("expirationDate");
         String perkTimes = payload.get("perkTimes");
         String perkLocations = payload.get("perkLocations");
+        String perkProduct = payload.get("perkProduct");
 
         Membership membership = membershipService.findById(membershipId);
         Perk perk = new Perk();
@@ -83,6 +84,7 @@ public class PerksController {
         perk.setMembership(membership);
         perk.setTimes(perkTimes);
         perk.setLocations(perkLocations);
+        perk.setProduct(perkProduct);
         membership.addPerk(perk);
         perkRepository.save(perk);
         membershipRepository.save(membership);
