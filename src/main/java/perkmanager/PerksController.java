@@ -98,12 +98,12 @@ public class PerksController {
         return "allPerks :: content";
     }
 
-    @GetMapping("/searchPerk/name/{perkName}")
-    public String viewMembershipPerks(@PathVariable("perkName") String perkName, Model model) {
+    @GetMapping("/searchPerk/{searchText}")
+    public String viewSearchedPerks(@PathVariable("searchText") String searchText, Model model) {
         List<Perk> allPerks = membershipService.findAllPerks();
         List<Perk> perks = new ArrayList<>();
         for (Perk perk : allPerks) {
-            if (perk.getPerkName().contains(perkName)) {
+            if (perk.getPerkName().contains(searchText) || perk.getProduct().contains(searchText)) {
                 perks.add(perk);
             }
         }
