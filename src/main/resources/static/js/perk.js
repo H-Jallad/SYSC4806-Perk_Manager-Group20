@@ -71,9 +71,9 @@ contentDiv.addEventListener('click', function(event) {
         }
     }
     else if (event.target.id.startsWith('search-perks')) {
-        let perkName = document.getElementById('search-perk-name').value;
-        if(perkName) {
-            fetch(`/searchPerk/name/${perkName}`)
+        let searchText = document.getElementById('search-perk').value;
+        if(searchText) {
+            fetch(`/searchPerk/${searchText}`)
                 .then(response => response.text())
                 .then(content => {
                     document.querySelector('#content').innerHTML = content;

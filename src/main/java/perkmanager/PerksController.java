@@ -74,6 +74,7 @@ public class PerksController {
         String expirationDate = payload.get("expirationDate");
         String perkTimes = payload.get("perkTimes");
         String perkLocations = payload.get("perkLocations");
+        String perkProduct = payload.get("perkProduct");
 
         Membership membership = membershipService.findById(membershipId);
         Perk perk = new Perk();
@@ -83,6 +84,7 @@ public class PerksController {
         perk.setMembership(membership);
         perk.setTimes(perkTimes);
         perk.setLocations(perkLocations);
+        perk.setProduct(perkProduct);
         membership.addPerk(perk);
         perkRepository.save(perk);
         membershipRepository.save(membership);
@@ -96,12 +98,12 @@ public class PerksController {
         return "allPerks :: content";
     }
 
-    @GetMapping("/searchPerk/name/{perkName}")
-    public String viewMembershipPerks(@PathVariable("perkName") String perkName, Model model) {
+    @GetMapping("/searchPerk/{searchText}")
+    public String viewSearchedPerks(@PathVariable("searchText") String searchText, Model model) {
         List<Perk> allPerks = membershipService.findAllPerks();
         List<Perk> perks = new ArrayList<>();
         for (Perk perk : allPerks) {
-            if (perk.getPerkName().contains(perkName)) {
+            if (perk.getPerkName().contains(searchText) || perk.getProduct().contains(searchText)) {
                 perks.add(perk);
             }
         }

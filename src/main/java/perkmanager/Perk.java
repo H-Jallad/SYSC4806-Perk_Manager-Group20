@@ -21,14 +21,14 @@ public class Perk {
 
     private String expirationDate;
 
-
-
     private String times;
     private int expirationYear;
 
     private int expirationMonth;
 
     private int expirationDay;
+
+    private String product;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
@@ -142,4 +142,8 @@ public class Perk {
     public int hashCode() {
         return Objects.hash(perkName, perkDescription);
     }
+
+    public void setProduct(String product){this.product = product;}
+
+    public String getProduct(){return product;}
 }

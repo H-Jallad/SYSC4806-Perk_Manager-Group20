@@ -12,7 +12,6 @@ contentDiv.addEventListener('click', function(event) {
         // Get the membershipId from the clicked button's id
         let membershipId = event.target.id.split('-').pop();
 
-        // Send an AJAX request to go back to og vote value
         $.ajax({
             type: 'POST',
             url: '/removeMembership/' + membershipId,
@@ -43,7 +42,6 @@ contentDiv.addEventListener('click', function(event) {
     else if (event.target.id.startsWith('add-membership')) {
         let selectedMembership = membershipSelect.options[membershipSelect.selectedIndex].value;
 
-        // Send an AJAX request to go back to og vote value
         $.ajax({
             type: 'POST',
             url: '/addMembership/' + selectedMembership,
@@ -69,9 +67,9 @@ contentDiv.addEventListener('click', function(event) {
         let expirationDate = membershipDropdown.querySelector('#perk-expiration-date').value;
         let perkLocations = membershipDropdown.querySelector('#perk-locations').value;
         let perkTimes = membershipDropdown.querySelector('#perk-times').value;
+        let perkProduct = membershipDropdown.querySelector('#perk-product').value;
 
 
-        // Send an AJAX request to go back to og vote value
         $.ajax({
             type: 'POST',
             url: '/addPerk',
@@ -81,7 +79,8 @@ contentDiv.addEventListener('click', function(event) {
                 description: description,
                 expirationDate: expirationDate,
                 perkLocations: perkLocations,
-                perkTimes: perkTimes
+                perkTimes: perkTimes,
+                perkProduct: perkProduct
             }),
             contentType: 'application/json',
             success: function () {
