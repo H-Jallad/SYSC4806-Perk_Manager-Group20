@@ -13,13 +13,14 @@ This program consists of a page to add a user, a page to add memberships, and a 
 
 This program now has a login functionality that can allow a user to either login and use the system through their account, or to use the system as a guest. In this way, multiple users can now use the system. The program also has a file-based persistence H2 database that persists user data across application restarts. The user interface of the application has been refreshed to encompass CSS Bootstrap and Javascript such that all functionality of the application can be accessed through the landing page. In this version of the application, a guest (not logged in) user can browse all the perks and upvote or downvote the perks they want. A logged in user can add memberships they have to their profile and add perks to the memberships. They can also upvote and downvote perks. They can then also view the perks associated with their specific memberships. Perks in this release have also been expanded to include an expiry date field and upvote/downvote buttons.
 
-## Plan For Next Sprint:
+## Milestone 3: Final Release:
 
-The team will worktowards adding limitations to perks in geographical location and time. They will also expand the perks to have an associated product as well. The team will then add a perk searching functionality which will either list results by decreasing amount of votes or by expiry date. They will also enable perks to be removed from the system if they are expired.
+The program now has products, geographical locations, and valid times associated with perks. These are simply text fields that hold the information. The application can now perform searches for perks based on the perk name or the product associated with a perk. The user interface of the application has been updated to include sorting buttons that allow a user to sort the perks in the system by either by a descending amount of votes (usefulness) or by expiry date. The unit tests of the application have been thoroughly updated to include tests for negative and edge cases.
 
 # UML Class diagram
 
-#![uml-class](https://user-images.githubusercontent.com/72241380/226972074-a8169d71-dece-425b-b3ab-1da97983e6d4.png)
+![uml class diagram](https://user-images.githubusercontent.com/72241380/229987427-f4bb52f8-f561-4648-a22b-3652defc5d15.png)
 
 ## Database Schema
-![database-schema](https://user-images.githubusercontent.com/72241380/226965673-2368e538-0415-4823-83c5-f8d0fce1d993.png)
+![ER diagram](https://user-images.githubusercontent.com/72241380/229987501-1811a1c2-1f69-42c8-b7fc-9e5f7e35fc71.png)
+
